@@ -27,7 +27,7 @@ python obstacle-edit.py obs.txt 80-100,45
 If you want to define obstacles 160-250 deg, E=60, 300-355 deg, E=70; 45-50 dec, E=55 with:
 
 ```
-python obstacle-edit.py obs.txt 160-250,60
-python obstacle-edit.py obs.txt 300-355,70
-python obstacle-edit.py obs.txt 45-50,55
+python obstacles-edit.py obs.txt 160-250,60
+python obstacles-edit.py obs.txt 300-355,70
+python obstacles-edit.py obs.txt 45-50,55
 ```
