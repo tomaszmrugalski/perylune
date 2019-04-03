@@ -1,7 +1,8 @@
 #
 
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QVBoxLayout,  QTabWidget, QPushButton
+from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QGridLayout, QVBoxLayout, QLabel, \
+     QLineEdit, QTabWidget, QPushButton, QGroupBox
 
 # from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QWidget, QAction, QTabWidget,QVBoxLayout
 # from PyQt5.QtGui import QIcon
@@ -41,25 +42,70 @@ class CalcGUITabs(QWidget):
     def __init__(self, parent):
         super(QWidget, self).__init__(parent)
         self.layout = QVBoxLayout(self)
-        print("####\n")
 
         self.tabs = QTabWidget()
-        self.tab1 = QWidget()
+        self.tab1 = self.initSphericalDistanceUI()
         self.tab2 = QWidget()
 
         # Add tabs
         self.tabs.addTab(self.tab1, "Spherical distance")
         self.tabs.addTab(self.tab2, "RA/Dec")
 
-        print("#### 1\n")
-        self.tab1.layout = QVBoxLayout(self)
-        print("#### 2\n")
-        self.pushButton1 = QPushButton("PyQt5 button")
-        self.tab1.layout.addWidget(self.pushButton1)
-        self.tab1.setLayout(self.tab1.layout)
-
         self.layout.addWidget(self.tabs)
         self.setLayout(self.layout)
+
+    # Initialize 
+    def initSphericalDistanceUI(self):
+        x = QWidget()
+        vbox = QVBoxLayout(self)
+        vbox.setSpacing(10)
+
+        # Setting up form for the first point
+        self.pktA_box = QGroupBox('First point')
+        self.pktA_box.layout = QGridLayout(self.pktA_box)
+        self.pktA_box.setLayout(self.pktA_box.layout)
+
+        vbox.addWidget(self.pktA_box, 0)
+
+        b1title = QLabel('Longitude (B)')
+        l1title = QLabel('Lattitude (L)')
+
+        b1 = QLineEdit() # longitude (dlugosc)
+        l1 = QLineEdit() # lattitude (szerokosc)
+        
+        self.pktA_box.layout.addWidget(b1title, 1, 0)
+        self.pktA_box.layout.addWidget(b1, 1, 1)
+
+        self.pktA_box.layout.addWidget(l1title, 2, 0)
+        self.pktA_box.layout.addWidget(l1, 2, 1)
+
+        # Setting up form for the second point
+        self.pktB_box = QGroupBox('Second point')
+        self.pktB_box.layout = QGridLayout(self.pktB_box)
+        self.pktB_box.setLayout(self.pktB_box.layout)
+
+        vbox.addWidget(self.pktB_box, 0)
+        b2title = QLabel('Longitude (B)')
+        l2title = QLabel('Lattitude (L)')
+        b2 = QLineEdit() # longitude (dlugosc)
+        l2 = QLineEdit() # lattitude (szerokosc)
+
+        self.pktB_box.layout.addWidget(b2title, 1, 0)
+        self.pktB_box.layout.addWidget(b2, 1, 1)
+
+        self.pktB_box.layout.addWidget(l2title, 2, 0)
+        self.pktB_box.layout.addWidget(l2, 2, 1)
+        
+        #grid.addWidget(b2title, 3, 0)
+        #grid.addWidget(b2, 3, 1)
+
+        #grid.addWidget(l2title, 4, 0)
+        #grid.addWidget(l2, 4, 1)
+
+        vbox.addStretch(2)
+
+        x.setLayout(vbox)
+        return x
 
 if __name__ == '__main__':
 
