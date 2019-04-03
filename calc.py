@@ -11,6 +11,10 @@ class CalcGUI(QMainWindow):
 
     def __init__(self, argv):
         super().__init__()
+
+        self.initUI()
+
+    def initUI(self):
         self.title = 'OrbCalc'
         self.left = 0
         self.top = 0
@@ -21,6 +25,13 @@ class CalcGUI(QMainWindow):
 
         self.table_widget = CalcGUITabs(self)
         self.setCentralWidget(self.table_widget)
+
+        # Move the window to the center
+        frameGm = self.frameGeometry()
+        screen = QApplication.desktop().screenNumber(QApplication.desktop().cursor().pos())
+        centerPoint = QApplication.desktop().screenGeometry(screen).center()
+        frameGm.moveCenter(centerPoint)
+        self.move(frameGm.topLeft())
  
     def run(self):
 
