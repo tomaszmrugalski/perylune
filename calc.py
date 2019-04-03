@@ -1,4 +1,4 @@
-#
+#!/usr/bin/env python3
 
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QGridLayout, QVBoxLayout, QLabel, \
@@ -6,10 +6,6 @@ from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QGridLayout, QVB
 from PyQt5.QtCore import pyqtSlot
 
 from OrbCalc import *
-
-# from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QWidget, QAction, QTabWidget,QVBoxLayout
-# from PyQt5.QtGui import QIcon
-# from PyQt5.QtCore import pyqtSlot
 
 class CalcGUI(QMainWindow):
 
