@@ -36,7 +36,7 @@ class CalcGUI(QMainWindow):
         centerPoint = QApplication.desktop().screenGeometry(screen).center()
         frameGm.moveCenter(centerPoint)
         self.move(frameGm.topLeft())
- 
+
     def run(self):
 
         self.show()
@@ -57,7 +57,7 @@ class CalcGUITabs(QWidget):
         self.layout.addWidget(self.tabs)
         self.setLayout(self.layout)
 
-    # Initialize 
+    # Initialize
     def initSphericalDistanceUI(self):
         x = QWidget()
         vbox = QVBoxLayout(self)
@@ -75,7 +75,7 @@ class CalcGUITabs(QWidget):
 
         self.b1 = QLineEdit() # longitude (dlugosc)
         self.l1 = QLineEdit() # lattitude (szerokosc)
-        
+
         self.pktA_box.layout.addWidget(b1title, 1, 0)
         self.pktA_box.layout.addWidget(self.b1, 1, 1)
 
@@ -103,12 +103,12 @@ class CalcGUITabs(QWidget):
         self.calc_btn = QPushButton("Calculate!")
         vbox.addWidget(self.calc_btn, 0)
         self.calc_btn.clicked.connect(self.on_calc_click)
-        
+
         # Set the output box
         self.text = QTextEdit()
         self.text.setReadOnly(True)
         vbox.addWidget(self.text, 0)
-        
+
         vbox.addStretch(2)
 
         x.setLayout(vbox)
@@ -117,17 +117,38 @@ class CalcGUITabs(QWidget):
     @pyqtSlot()
     def on_calc_click(self):
 
+        # Get the input data (point A)
         b1_text = self.b1.text()
         l1_text = self.l1.text()
-        
+
+        # Get the input data (point B)
         b2_text = self.b2.text()
         l2_text = self.l2.text()
 
+        # Parse longitude and convert to a float
         b1_long = OrbCalc.parseLongitude(b1_text)
-
         b1_float = OrbCalc.longitudeToFloat(b1_long)
+        l1_long = OrbCalc.parseLongitude(l1_text)
+        l1_float = OrbCalc.longitudeToFloat(l1_long)
 
-        print("Longitute %d %d %f is really %f" % (b1_long[0], b1_long[1], b1_long[2], b1_float))
+        b2_long = OrbCalc.parseLongitude(b2_text)
+        b2_float = OrbCalc.longitudeToFloat(b2_long)
+        l2_long = OrbCalc.parseLongitude(l2_text)
+        l2_float = OrbCalc.longitudeToFloat(l2_long)
+
+        self.addText("Point A (%d %d %f, %d %d %f) is really %f %f\n"
+                         % (b1_long[0], b1_long[1], b1_long[2],
+                            l1_long[0], l1_long[1], l1_long[2],
+                            b1_float, l1_float))
+
+        self.addText("Point B (%d %d %f, %d %d %f) is really %f %f\n"
+                         % (b2_long[0], b2_long[1], b2_long[2],
+                            l2_long[0], l2_long[1], l2_long[2],
+                            b2_float,   l2_float))
+
+    def addText(self, txt):
+        txt = self.text.toPlainText() + txt
+        self.text.setText(txt)
 
 if __name__ == '__main__':
 
