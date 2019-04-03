@@ -3,7 +3,7 @@
 # expected to grow in capacity.
 
 class OrbCalc:
-    
+
     def parseLongitude(text):
 
         # get rid of the whitespaces first
@@ -26,7 +26,7 @@ class OrbCalc:
 
         values = [ int(tmp[0]), int(tmp[1]), float(tmp[2]) ]
 
-        print("[%d %d %f]" % (values[0], values[1], values[2]))
+        # print("[%d %d %f]" % (values[0], values[1], values[2]))
 
         return values
 
@@ -35,4 +35,3 @@ class OrbCalc:
     def longitudeToFloat(l):
         x = l[0] + float(l[1])/60 + float(l[2])/3600
         return x
-

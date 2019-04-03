@@ -132,7 +132,9 @@ class CalcGUITabs(QWidget):
         l2_long = OrbCalc.parseLongitude(l2_text)
         l2_float = OrbCalc.longitudeToFloat(l2_long)
 
-        self.addText("Point A (%d %d %f, %d %d %f) is really %f %f\n"
+
+
+        self.setText("Point A (%d %d %f, %d %d %f) is really %f %f\n"
                          % (b1_long[0], b1_long[1], b1_long[2],
                             l1_long[0], l1_long[1], l1_long[2],
                             b1_float, l1_float))
@@ -141,6 +143,9 @@ class CalcGUITabs(QWidget):
                          % (b2_long[0], b2_long[1], b2_long[2],
                             l2_long[0], l2_long[1], l2_long[2],
                             b2_float,   l2_float))
+
+    def setText(self, txt):
+        self.text.setText(txt)
 
     def addText(self, txt):
         txt = self.text.toPlainText() + txt
