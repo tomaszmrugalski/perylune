@@ -2,7 +2,10 @@
 
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QGridLayout, QVBoxLayout, QLabel, \
-     QLineEdit, QTabWidget, QPushButton, QGroupBox
+     QLineEdit, QTabWidget, QPushButton, QGroupBox, QTextEdit
+from PyQt5.QtCore import pyqtSlot
+
+from OrbCalc import *
 
 # from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QWidget, QAction, QTabWidget,QVBoxLayout
 # from PyQt5.QtGui import QIcon
@@ -70,14 +73,14 @@ class CalcGUITabs(QWidget):
         b1title = QLabel('Longitude (B)')
         l1title = QLabel('Lattitude (L)')
 
-        b1 = QLineEdit() # longitude (dlugosc)
-        l1 = QLineEdit() # lattitude (szerokosc)
+        self.b1 = QLineEdit() # longitude (dlugosc)
+        self.l1 = QLineEdit() # lattitude (szerokosc)
         
         self.pktA_box.layout.addWidget(b1title, 1, 0)
-        self.pktA_box.layout.addWidget(b1, 1, 1)
+        self.pktA_box.layout.addWidget(self.b1, 1, 1)
 
         self.pktA_box.layout.addWidget(l1title, 2, 0)
-        self.pktA_box.layout.addWidget(l1, 2, 1)
+        self.pktA_box.layout.addWidget(self.l1, 2, 1)
 
         # Setting up form for the second point
         self.pktB_box = QGroupBox('Second point')
@@ -87,25 +90,44 @@ class CalcGUITabs(QWidget):
         vbox.addWidget(self.pktB_box, 0)
         b2title = QLabel('Longitude (B)')
         l2title = QLabel('Lattitude (L)')
-        b2 = QLineEdit() # longitude (dlugosc)
-        l2 = QLineEdit() # lattitude (szerokosc)
+        self.b2 = QLineEdit() # longitude (dlugosc)
+        self.l2 = QLineEdit() # lattitude (szerokosc)
 
         self.pktB_box.layout.addWidget(b2title, 1, 0)
-        self.pktB_box.layout.addWidget(b2, 1, 1)
+        self.pktB_box.layout.addWidget(self.b2, 1, 1)
 
         self.pktB_box.layout.addWidget(l2title, 2, 0)
-        self.pktB_box.layout.addWidget(l2, 2, 1)
+        self.pktB_box.layout.addWidget(self.l2, 2, 1)
+
+        # Set the calc button
+        self.calc_btn = QPushButton("Calculate!")
+        vbox.addWidget(self.calc_btn, 0)
+        self.calc_btn.clicked.connect(self.on_calc_click)
         
-        #grid.addWidget(b2title, 3, 0)
-        #grid.addWidget(b2, 3, 1)
-
-        #grid.addWidget(l2title, 4, 0)
-        #grid.addWidget(l2, 4, 1)
-
+        # Set the output box
+        self.text = QTextEdit()
+        self.text.setReadOnly(True)
+        vbox.addWidget(self.text, 0)
+        
         vbox.addStretch(2)
 
         x.setLayout(vbox)
         return x
+
+    @pyqtSlot()
+    def on_calc_click(self):
+
+        b1_text = self.b1.text()
+        l1_text = self.l1.text()
+        
+        b2_text = self.b2.text()
+        l2_text = self.l2.text()
+
+        b1_long = OrbCalc.parseLongitude(b1_text)
+
+        b1_float = OrbCalc.longitudeToFloat(b1_long)
+
+        print("Longitute %d %d %f is really %f" % (b1_long[0], b1_long[1], b1_long[2], b1_float))
 
 if __name__ == '__main__':
 
