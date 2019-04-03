@@ -104,8 +104,9 @@ class CalcGUITabs(QWidget):
         self.text = QTextEdit()
         self.text.setReadOnly(True)
         vbox.addWidget(self.text, 0)
+        self.text.resize(self.text.width(), self.text.height() + 800)
 
-        vbox.addStretch(2)
+#        vbox.addStretch(2)
 
         x.setLayout(vbox)
         return x
