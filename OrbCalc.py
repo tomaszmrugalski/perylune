@@ -7,6 +7,12 @@ import math
 
 class OrbCalc:
 
+    '''This defines various constants'''
+    CONSTS = {
+         'earth-radius' : [ 6378137, 'm', 'Description here' ],
+         'rho': [ 180.0/math.pi, '', 'Used to convert degrees to radians']
+        }
+
     def parseLongitude(text):
 
         # get rid of the whitespaces first
@@ -49,3 +55,7 @@ class OrbCalc:
     def getRho():
         '''Returns rho (used to convert degrees to radians)'''
         return 180.0/math.pi
+
+    def getEarthRadius():
+        '''Returns earth diameter in meters'''
+        return OrbCalc.CONSTS['earth-radius'][0]

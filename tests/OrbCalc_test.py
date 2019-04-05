@@ -10,3 +10,6 @@ def test_deg2rad_case():
 
 def test_constant_rho():
     assert OrbCalc.getRho() == 180.0/math.pi
+
+def test_constant_earth_radius():
+    assert OrbCalc.getEarthRadius() == 6378137
