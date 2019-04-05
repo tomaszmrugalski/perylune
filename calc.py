@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QGridLayout, QVB
 from PyQt5.QtCore import pyqtSlot
 
 from OrbCalc import *
-from math import sin, cos, asin, acos
+from math import sin, cos, asin, acos, sqrt
 
 class CalcGUI(QMainWindow):
 
@@ -164,8 +164,26 @@ class CalcGUITabs(QWidget):
         cosd = sin(b1)*sin(b2) + cos(b1)*cos(b2)*cos(l2 - l1)
         d = acos(cosd)
 
-        self.addText("cos(D)=%f d=%f [rad] d=%f [deg]" % (cosd, d, OrbCalc.rad2deg(d)))
+        self.addText("cos(D)=%f d=%f [rad] d=%f [deg]\n" % (cosd, d, OrbCalc.rad2deg(d)))
 
+        a = OrbCalc.getConst('earth-radius')
+        f = OrbCalc.getConst('earth-flattening')
+
+        # e^2
+        esquare = 2*f - f*f
+
+        expr1 = 1 - esquare*(sin(bsr)*sin(bsr))
+        expr = expr1*expr1*expr1
+        expr = sqrt(expr)
+
+        M = a*(1-esquare)/expr
+        N = a/sqrt(expr1)
+
+        avg_radius_of_ellipsoid = sqrt(N*M)
+
+        dist = d*avg_radius_of_ellipsoid
+
+        self.addText("expr=%f, M=%f N=%f avg-radius=%f distance=%f\n" % (expr, M, N, avg_radius_of_ellipsoid, dist))
 
     def setText(self, txt):
         self.text.setText(txt)
