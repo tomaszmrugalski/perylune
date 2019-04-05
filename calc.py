@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QGridLayout, QVB
 from PyQt5.QtCore import pyqtSlot
 
 from OrbCalc import *
+from math import sin, cos, asin, acos
 
 class CalcGUI(QMainWindow):
 
@@ -131,25 +132,40 @@ class CalcGUITabs(QWidget):
         l2_text = self.l2.text()
 
         # Parse longitude and convert to a float
-        b1_long = OrbCalc.parseLongitude(b1_text)
-        b1_float = OrbCalc.longitudeToFloat(b1_long)
-        l1_long = OrbCalc.parseLongitude(l1_text)
-        l1_float = OrbCalc.longitudeToFloat(l1_long)
+        b1_text = OrbCalc.parseLongitude(b1_text)
+        b1 = OrbCalc.longitudeToFloat(b1_text)
+        l1_text = OrbCalc.parseLongitude(l1_text)
+        l1 = OrbCalc.longitudeToFloat(l1_text)
 
-        b2_long = OrbCalc.parseLongitude(b2_text)
-        b2_float = OrbCalc.longitudeToFloat(b2_long)
-        l2_long = OrbCalc.parseLongitude(l2_text)
-        l2_float = OrbCalc.longitudeToFloat(l2_long)
+        b2_text = OrbCalc.parseLongitude(b2_text)
+        b2 = OrbCalc.longitudeToFloat(b2_text)
+        l2_text = OrbCalc.parseLongitude(l2_text)
+        l2 = OrbCalc.longitudeToFloat(l2_text)
 
         self.setText("Point A (%d %d %f, %d %d %f) is really %f %f\n"
-                         % (b1_long[0], b1_long[1], b1_long[2],
-                            l1_long[0], l1_long[1], l1_long[2],
-                            b1_float, l1_float))
+                         % (b1_text[0], b1_text[1], b1_text[2],
+                            l1_text[0], l1_text[1], l1_text[2],
+                            b1, l1))
 
         self.addText("Point B (%d %d %f, %d %d %f) is really %f %f\n"
-                         % (b2_long[0], b2_long[1], b2_long[2],
-                            l2_long[0], l2_long[1], l2_long[2],
-                            b2_float,   l2_float))
+                         % (b2_text[0], b2_text[1], b2_text[2],
+                            l2_text[0], l2_text[1], l2_text[2],
+                            b2,   l2))
+
+        b1 = OrbCalc.deg2rad(b1)
+        b2 = OrbCalc.deg2rad(b2)
+        l1 = OrbCalc.deg2rad(l1)
+        l2 = OrbCalc.deg2rad(l2)
+
+        self.addText("B1rad=%f L1rad=%f B2rad=%f L2rad=%f" % (b1, l1, b2, l2))
+
+        bsr = (b1+b2)/2
+
+        cosd = sin(b1)*sin(b2) + cos(b1)*cos(b2)*cos(l2 - l1)
+        d = acos(cosd)
+
+        self.addText("cos(D)=%f d=%f [rad] d=%f [deg]" % (cosd, d, OrbCalc.rad2deg(d)))
+
 
     def setText(self, txt):
         self.text.setText(txt)

@@ -9,8 +9,9 @@ class OrbCalc:
 
     '''This defines various constants'''
     CONSTS = {
-         'earth-radius' : [ 6378137, 'm', 'Description here' ],
-         'rho': [ 180.0/math.pi, '', 'Used to convert degrees to radians']
+         'earth-radius' :    [ 6378137,          'm', 'Description here' ],
+         'earth-flattening': [ 0.00335281068118, '', 'Earth flattening' ],
+         'rho':              [ 180.0/math.pi,    '', 'Used to convert degrees to radians']
         }
 
     def parseLongitude(text):
@@ -59,3 +60,13 @@ class OrbCalc:
     def getEarthRadius():
         '''Returns earth diameter in meters'''
         return OrbCalc.CONSTS['earth-radius'][0]
+
+    def getConst(name):
+        '''Returns constant of specified name'''
+        return OrbCalc.CONSTS[name][0]
+
+    def getConstUnits(name):
+        return OrbCalc.CONSTS[name][1]
+
+    def getConstDescr(name):
+        return OrbCalc.CONSTS[name][2]
