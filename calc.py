@@ -53,6 +53,14 @@ class CalcGUITabs(QWidget):
         self.layout.addWidget(self.tabs)
         self.setLayout(self.layout)
 
+        self.fillSampleData()
+
+    def fillSampleData(self):
+        self.b1.setText("54 31 35,4")
+        self.l1.setText("18 30 38,3")
+        self.b2.setText("52 12 0,9")
+        self.l2.setText("21 0 34,6")
+
     # Initialize
     def initSphericalDistanceUI(self):
         x = QWidget()
@@ -132,8 +140,6 @@ class CalcGUITabs(QWidget):
         b2_float = OrbCalc.longitudeToFloat(b2_long)
         l2_long = OrbCalc.parseLongitude(l2_text)
         l2_float = OrbCalc.longitudeToFloat(l2_long)
-
-
 
         self.setText("Point A (%d %d %f, %d %d %f) is really %f %f\n"
                          % (b1_long[0], b1_long[1], b1_long[2],

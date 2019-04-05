@@ -2,12 +2,17 @@
 # related to kerplerian orbits. It is very modest now, but it is
 # expected to grow in capacity.
 
+import string
+import math
+
 class OrbCalc:
 
     def parseLongitude(text):
 
         # get rid of the whitespaces first
         text = text.strip()
+
+        text = text.replace(',' , '.')
 
         if not len(text):
             # If the string is empty, assume 0
@@ -30,8 +35,17 @@ class OrbCalc:
 
         return values
 
-
     # This assumes l is an array of 3 integer/float values)
     def longitudeToFloat(l):
         x = l[0] + float(l[1])/60 + float(l[2])/3600
         return x
+
+    def deg2rad(d):
+        return d*math.pi/180
+
+    def rad2deg(r):
+        return r*180/math.pi
+
+    def getRho():
+        '''Returns rho (used to convert degrees to radians)'''
+        return 180.0/math.pi
