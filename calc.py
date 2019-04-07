@@ -143,11 +143,59 @@ class CalcGUITabs(QWidget):
         layout.addWidget(almanac, 0)
 
         # Group 2: Keplerian elements
-        self.keplerian = QGroupBox('Keplerian elements')
+        keplerian = QGroupBox('Keplerian elements')
 
-        layout.addWidget(self.keplerian,1)
+        keplerian.layout = QGridLayout(keplerian)
+        keplerian.layout.setSpacing(1)
+
+        # element 1: eccentricity
+        keplerian.layout.addWidget(QLabel('Eccentricity [none]'), 0, 0)
+        keplerian.e = QLineEdit()
+        keplerian.layout.addWidget(keplerian.e, 0,1)
+
+        # element 2: time of applicability [s]
+        keplerian.layout.addWidget(QLabel('Time of applicability [s]'), 1, 0)
+        keplerian.toa = QLineEdit()
+        keplerian.layout.addWidget(keplerian.toa, 1,1)
+
+        # element 3: inclination [rad]
+        keplerian.layout.addWidget(QLabel('Inclination [rad]'), 2, 0)
+        keplerian.incl = QLineEdit()
+        keplerian.layout.addWidget(keplerian.incl, 2,1)
+
+        # element 4: Rate of Right Ascension [rad/s]
+        keplerian.layout.addWidget(QLabel('Rate of Right Ascension [rad/s]'), 3, 0)
+        keplerian.ra_rate = QLineEdit()
+        keplerian.layout.addWidget(keplerian.ra_rate, 3,1)
+
+        # element 5: sqrt(A) [m ^ 1/2]
+        keplerian.layout.addWidget(QLabel('Sq. root of major semi-axis [m^1/2]'), 4, 0)
+        keplerian.sqrt_a = QLineEdit()
+        keplerian.layout.addWidget(keplerian.sqrt_a, 4,1)
+
+        # element 6: Right ascension at week [rad]
+        keplerian.layout.addWidget(QLabel('Right ascension at week [rad]'), 5, 0)
+        keplerian.ra_week = QLineEdit()
+        keplerian.layout.addWidget(keplerian.ra_week, 5, 1)
+
+        # element 7: Argument of perigee [rad]
+        keplerian.layout.addWidget(QLabel('Argument of perigee [rad]'), 6, 0)
+        keplerian.aop = QLineEdit()
+        keplerian.layout.addWidget(keplerian.aop, 6, 1)
+
+        # element 8: Mean anomaly [rad]
+        keplerian.layout.addWidget(QLabel('Mean anomaly [rad]'), 7, 0)
+        keplerian.mean_anomaly = QLineEdit()
+        keplerian.layout.addWidget(keplerian.mean_anomaly, 7, 1)
+
+        self.keplerian = keplerian
+
+        layout.addWidget(keplerian,1)
 
 
+        calc_btn = QPushButton("Calculate!")
+        layout.addWidget(calc_btn, 0)
+        calc_btn.clicked.connect(self.on_kepler_calc_click)
 
         # Group 3: Set the output box
         x.text = QTextEdit()
@@ -157,6 +205,10 @@ class CalcGUITabs(QWidget):
 
         x.setLayout(layout)
         return x
+
+    @pyqtSlot()
+    def on_kepler_calc_click(self):
+        pass
 
     @pyqtSlot()
     def on_calc_click(self):
