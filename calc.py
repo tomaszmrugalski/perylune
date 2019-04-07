@@ -2,7 +2,7 @@
 
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QGridLayout, QVBoxLayout, QLabel, \
-     QLineEdit, QTabWidget, QPushButton, QGroupBox, QTextEdit
+     QLineEdit, QTabWidget, QPushButton, QGroupBox, QTextEdit, QComboBox, QHBoxLayout
 from PyQt5.QtCore import pyqtSlot
 
 from OrbCalc import *
@@ -44,12 +44,12 @@ class CalcGUITabs(QWidget):
         self.layout = QVBoxLayout(self)
 
         self.tabs = QTabWidget()
-        self.tab1 = self.initSphericalDistanceUI()
-        self.tab2 = QWidget()
+        self.tab1 = self.initOrbitalElementsUI()
+        self.tab2 = self.initSphericalDistanceUI()
 
         # Add tabs
-        self.tabs.addTab(self.tab1, "Spherical distance")
-        self.tabs.addTab(self.tab2, "RA/Dec")
+        self.tabs.addTab(self.tab1, "Orbital elements")
+        self.tabs.addTab(self.tab2, "Spherical distance")
 
         self.layout.addWidget(self.tabs)
         self.setLayout(self.layout)
@@ -115,9 +115,47 @@ class CalcGUITabs(QWidget):
         vbox.addWidget(self.text, 0)
         self.text.resize(self.text.width(), self.text.height() + 800)
 
-#        vbox.addStretch(2)
-
         x.setLayout(vbox)
+        return x
+
+    def initOrbitalElementsUI(self):
+        x = QWidget()
+        layout = QVBoxLayout(self)
+        layout.setSpacing(10)
+
+        # Setting up group 1: handling almanac loading from file
+        almanac = QGroupBox('Almanac')
+        almanac.layout = QGridLayout(almanac)
+        almanac.setLayout(almanac.layout)
+
+        # Almanac filename to be loaded.
+        almanac.load_btn = QPushButton("Load alamanac")
+        almanac.layout.addWidget(almanac.load_btn, 0,0)
+
+        almanac_name = 'data/almanac.yuma.week0000.061440.txt'
+        almanac.layout.addWidget(QLabel(almanac_name), 0,1)
+
+        almanac.combo_box = QComboBox()
+        almanac.layout.addWidget(almanac.combo_box, 1,0,2,0)
+
+        x.almanac = almanac
+
+        layout.addWidget(almanac, 0)
+
+        # Group 2: Keplerian elements
+        self.keplerian = QGroupBox('Keplerian elements')
+
+        layout.addWidget(self.keplerian,1)
+
+
+
+        # Group 3: Set the output box
+        x.text = QTextEdit()
+        x.text.setReadOnly(True)
+        layout.addWidget(x.text, 2)
+        x.text.resize(x.text.width(), x.text.height() + 800)
+
+        x.setLayout(layout)
         return x
 
     @pyqtSlot()
@@ -142,23 +180,27 @@ class CalcGUITabs(QWidget):
         l2_text = OrbCalc.parseLongitude(l2_text)
         l2 = OrbCalc.longitudeToFloat(l2_text)
 
-        self.setText("Point A (%d %d %f, %d %d %f) is really %f %f\n"
+        # Print the entry points
+        self.setText("Point A (%d %d %f, %d %d %f) in floating point notation is %f, %f\n"
                          % (b1_text[0], b1_text[1], b1_text[2],
                             l1_text[0], l1_text[1], l1_text[2],
                             b1, l1))
 
-        self.addText("Point B (%d %d %f, %d %d %f) is really %f %f\n"
+        self.addText("Point B (%d %d %f, %d %d %f) in floating point notation is %f, %f\n"
                          % (b2_text[0], b2_text[1], b2_text[2],
                             l2_text[0], l2_text[1], l2_text[2],
                             b2,   l2))
 
+        # Convert longitude, lattitude to radians
         b1 = OrbCalc.deg2rad(b1)
         b2 = OrbCalc.deg2rad(b2)
         l1 = OrbCalc.deg2rad(l1)
         l2 = OrbCalc.deg2rad(l2)
 
-        self.addText("B1rad=%f L1rad=%f B2rad=%f L2rad=%f" % (b1, l1, b2, l2))
+        #
+        # self.addText("B1rad=%f L1rad=%f B2rad=%f L2rad=%f" % (b1, l1, b2, l2))
 
+        #
         bsr = (b1+b2)/2
 
         cosd = sin(b1)*sin(b2) + cos(b1)*cos(b2)*cos(l2 - l1)
