@@ -16,7 +16,7 @@ class CalcGUI(QMainWindow):
         self.initUI()
 
     def initUI(self):
-        self.title = 'OrbCalc'
+        self.title = 'Perylune 0.1.0'
         self.left = 0
         self.top = 0
         self.width = 1024
@@ -61,6 +61,16 @@ class CalcGUITabs(QWidget):
         self.l1.setText("18 30 38,3")
         self.b2.setText("52 12 0,9")
         self.l2.setText("21 0 34,6")
+
+        self.keplerian.e.setText("0.005919456482")
+        self.keplerian.toa.setText("503808")
+        self.keplerian.incl.setText("0.9650800442")
+        self.keplerian.ra_rate.setText("-0.00000000781746849")
+        self.keplerian.sqrt_a.setText("5153.651855")
+        self.keplerian.ra_week.setText("1.741336716")
+        self.keplerian.aop.setText("0.559722101")
+        self.keplerian.mean_anomaly.setText("-1.68350197")
+        # week ignored
 
     # Initialize
     def initSphericalDistanceUI(self):
@@ -110,10 +120,10 @@ class CalcGUITabs(QWidget):
         self.calc_btn.clicked.connect(self.on_calc_click)
 
         # Set the output box
-        self.text = QTextEdit()
-        self.text.setReadOnly(True)
-        vbox.addWidget(self.text, 0)
-        self.text.resize(self.text.width(), self.text.height() + 800)
+        x.text = QTextEdit()
+        x.text.setReadOnly(True)
+        vbox.addWidget(x.text, 0)
+        x.text.resize(x.text.width(), x.text.height() + 800)
 
         x.setLayout(vbox)
         return x
@@ -208,10 +218,13 @@ class CalcGUITabs(QWidget):
 
     @pyqtSlot()
     def on_kepler_calc_click(self):
+        self.text = self.tab1.text
+        self.setText("Calculating orbits")
         pass
 
     @pyqtSlot()
     def on_calc_click(self):
+        self.text = self.tab2.text
 
         # Get the input data (point A)
         b1_text = self.b1.text()
