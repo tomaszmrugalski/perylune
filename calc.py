@@ -7,6 +7,7 @@ from PyQt5.QtCore import pyqtSlot
 
 from OrbCalc import *
 from math import sin, cos, asin, acos, sqrt
+from AlmanacYuma import AlmanacYuma
 
 class CalcGUI(QMainWindow):
 
@@ -141,12 +142,17 @@ class CalcGUITabs(QWidget):
         # Almanac filename to be loaded.
         almanac.load_btn = QPushButton("Load alamanac")
         almanac.layout.addWidget(almanac.load_btn, 0,0)
+        almanac.load_btn.clicked.connect(self.on_load_almanac_click)
 
-        almanac_name = 'data/almanac.yuma.week0000.061440.txt'
-        almanac.layout.addWidget(QLabel(almanac_name), 0,1)
+        almanac_fname = 'data/almanac.yuma.week0000.061440.txt'
+        name = QLineEdit(almanac_fname)
+
+        almanac.layout.addWidget(name, 0,1)
+        almanac.fname = name
 
         almanac.combo_box = QComboBox()
         almanac.layout.addWidget(almanac.combo_box, 1,0,2,0)
+        almanac.combo_box.currentIndexChanged.connect(self.on_combobox_click)
 
         x.almanac = almanac
 
@@ -215,6 +221,45 @@ class CalcGUITabs(QWidget):
 
         x.setLayout(layout)
         return x
+
+    @pyqtSlot()
+    def on_load_almanac_click(self):
+        '''Loads almanac data into an array, populates combo-box with it'''
+        fname = self.tab1.almanac.fname.text()
+        print("#### Loading %s" % fname)
+        alm = AlmanacYuma()
+        alm.load(fname)
+        print("#### Loaded %d sat[s]" % len(alm.sats))
+
+        self.tab1.almanac.sats = alm.sats
+
+        for sat in alm.sats:
+            self.tab1.almanac.combo_box.addItem("%s: %s (a=%f km, e=%f)" %
+                                                (sat.id, sat.name, (sat.a_sqrt * sat.a_sqrt /1000), sat.e))
+
+    @pyqtSlot()
+    def on_combobox_click(self):
+        current_id, rest = self.tab1.almanac.combo_box.currentText().split(':')
+        print("#### ID of the currently selected sat is %s" % current_id)
+
+        for s in self.tab1.almanac.sats:
+            if s.id == current_id:
+                # use this sat
+                print("Using sat: %s" % s.getText())
+                self.setSatParams(s)
+                return
+
+    def setSatParams(self, s):
+        '''Called when a value is chosen from combo-box. This method sets parameters in
+           the gui.'''
+        self.keplerian.e.setText("%.14f" % s.e)
+        self.keplerian.toa.setText("%.14f" % s.toa)
+        self.keplerian.incl.setText("%.14f" % s.incl)
+        self.keplerian.ra_rate.setText("%.14f" % s.ra_rate)
+        self.keplerian.sqrt_a.setText("%.14f" % s.a_sqrt)
+        self.keplerian.ra_week.setText("%.14f" % s.ra_week)
+        self.keplerian.aop.setText("%.14f" % s.aop)
+        self.keplerian.mean_anomaly.setText("%.14f" % s.mean_anomaly)
 
     @pyqtSlot()
     def on_kepler_calc_click(self):
