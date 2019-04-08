@@ -16,7 +16,6 @@ class AlmanacYuma:
                     line = line[offset+12:]
                     line = line.replace('*','')
                     line = line.strip()
-                    print("#### Found sat [%s]" % line)
                     if sat is not None:
                         self.sats.append(sat)
                     sat = Orbit(line)
