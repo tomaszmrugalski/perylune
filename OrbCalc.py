@@ -3,18 +3,26 @@
 # expected to grow in capacity.
 
 import string
+from math import *
 import math
+
+
 
 class OrbCalc:
 
     '''This defines various constants'''
     CONSTS = {
          'earth-radius' :    [ 6378137,          'm', 'Description here' ],
-         'earth-flattening': [ 0.00335281068118, '', 'Earth flattening' ],
-         'rho':              [ 180.0/math.pi,    '', 'Used to convert degrees to radians']
+         'earth-flattening': [ 0.00335281068118, '',  'Earth flattening' ],
+         'G':                [ 6.67408e-11,      'm^3/(kg*s^2)', 'Gravitational constant for Earth'],
+         'M':                [ 5.9722e24,        'kg', 'Mass of Earth' ],
+         'mu':               [ 3.986004418e14,   'm^3/s^2', 'Gravitational + mass (rho=albert(G * M)'],
+         'rho':              [ 180.0/math.pi,    '',  'Used to convert degrees to radians']
         }
 
     def parseLongitude(text):
+        '''Parses longitude specified as text, e.g. "53 19 20.5" into a triplet
+           of numbers (integer and two floats)'''
 
         # get rid of the whitespaces first
         text = text.strip()
@@ -46,6 +54,13 @@ class OrbCalc:
     def longitudeToFloat(l):
         x = l[0] + float(l[1])/60 + float(l[2])/3600
         return x
+
+    def getPeriod(a):
+        '''Returns period (in seconds) for a semi-major axis of an orbit'''
+        G = OrbCalc.getConst('G')
+        M = OrbCalc.getConst('M')
+        T = 2*math.pi*math.sqrt(a*a*a/(G*M))
+        return T
 
     def deg2rad(d):
         return d*math.pi/180
