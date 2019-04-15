@@ -17,6 +17,7 @@ class OrbCalc:
          'G':                [ 6.67408e-11,      'm^3/(kg*s^2)', 'Gravitational constant for Earth'],
          'M':                [ 5.9722e24,        'kg', 'Mass of Earth' ],
          'mu':               [ 3.986004418e14,   'm^3/s^2', 'Gravitational + mass (rho=albert(G * M)'],
+         'sidereal-day':     [ 23*3600 + 56*60 + 4.0905, 's', 'Length of sidereal day'],
          'rho':              [ 180.0/math.pi,    '',  'Used to convert degrees to radians']
         }
 
@@ -59,8 +60,13 @@ class OrbCalc:
         '''Returns period (in seconds) for a semi-major axis of an orbit'''
         G = OrbCalc.getConst('G')
         M = OrbCalc.getConst('M')
-        T = 2*math.pi*math.sqrt(a*a*a/(G*M))
+        mu = OrbCalc.getConst('mu') # G*M
+        T = 2*math.pi*math.sqrt(a*a*a/(mu))
         return T
+
+    def escapeVel():
+        '''Returns escape velocity from Earth (druga predkosc kosmiczna)'''
+        return sqrt(2*OrbCalc.getConst('mu')/OrbCalc.getConst('earth-radius'))
 
     def deg2rad(d):
         return d*math.pi/180
