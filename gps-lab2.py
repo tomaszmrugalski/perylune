@@ -148,10 +148,40 @@ class GpsDop:
 
         return HT
 
+    def method2calculateG(self, AZ, HT):
+        G = np.zeros((AZ.shape[0], 4))
+        for i in range(0, AZ.shape[0]):
+
+            G[i][0]=cos(HT[i])*sin(AZ[i])
+            G[i][1]=cos(HT[i])*cos(AZ[i])
+            G[i][2]=sin(HT[i])
+            G[i][3]=1
+
+        return G
+
+    def method2calculateA(self, G):
+
+        # G^T * G
+        tmp1 = np.dot(G.transpose(),G)
+
+        # (G^T * G)^-1
+        tmp2 = np.linalg.inv(tmp1)
+
+        return tmp2
+
+    def method2calculateDOP(self, A):
+        '''Returns DOP parameters based on A matrix. Returned DOP parameters
+           GDOP, PDOP, HDOP, VDOP, TDOP'''
+        gdop = sqrt(A[0,0] + A[1,1] + A[2,2] + A[3,3])
+        pdop = sqrt(A[0,0] + A[1,1] + A[2,2])
+        hdop = sqrt(A[0,0] + A[1,1])
+        vdop = sqrt(A[2,2])
+        tdop = sqrt(A[3,3])
+        return gdop, pdop, hdop, vdop, tdop
+
 gps = GpsDop()
 
 gps.load("data/gps-lab2-ecef-coords.txt")
-# gps.printLoadedObjects()
 
 obj_ecef = gps.getObjectsECEFvectors()
 obs_ecef = gps.getObserverECEF()
@@ -168,6 +198,19 @@ HT = gps.calculateTopoHeight(xENU, yENU, zENU)
 
 print("AZ=%s" % AZ)
 print("HT=%s" % HT)
+
+# Implementacja metody 2 (bo jest latwiejsza)
+
+G = gps.method2calculateG(AZ,HT)
+print("G=\n%s" % G)
+
+A = gps.method2calculateA(G)
+print("A=\n%s" % A)
+
+dops = gps.method2calculateDOP(A)
+
+#print("DOPs=%s" % dops)
+print(dops)
 
 #print("--------------")
 #A = np.array([ [1, 2, 3], [4, 5, 6], [7, 8, 9] ])
