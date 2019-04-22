@@ -139,6 +139,14 @@ class GpsDop:
 
         return AZ
 
+    def calculateTopoHeight(self, xENU, yENU, zENU):
+        HT = np.zeros(xENU.shape[0])
+
+        for i in range(0, xENU.shape[0]):
+
+            HT[i] = atan(zENU[i]/sqrt(xENU[i]*xENU[i] + yENU[i]*yENU[i]))
+
+        return HT
 
 gps = GpsDop()
 
@@ -156,9 +164,10 @@ print("yENU=%s" % yENU)
 print("zENU=%s" % zENU)
 
 AZ = gps.calculateAzimuth(xENU, yENU)
+HT = gps.calculateTopoHeight(xENU, yENU, zENU)
 
-print(AZ)
-
+print("AZ=%s" % AZ)
+print("HT=%s" % HT)
 
 #print("--------------")
 #A = np.array([ [1, 2, 3], [4, 5, 6], [7, 8, 9] ])
