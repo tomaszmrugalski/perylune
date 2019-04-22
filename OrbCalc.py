@@ -84,7 +84,7 @@ class OrbCalc:
 
     def getConst(name):
         '''Returns constant of specified name'''
-        return OrbCalc.CONSTS[name][0]
+        return float(OrbCalc.CONSTS[name][0])
 
     def getConstUnits(name):
         return OrbCalc.CONSTS[name][1]
