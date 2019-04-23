@@ -44,21 +44,35 @@ class GpsDop:
         except IOError:
             print("Failed to open %s file" % fname)
 
-    def printLoadedObjects(self):
+    def objectsSubset(self, selected, objects):
+
+        result=[]
+
+        for i in selected:
+            result.append(objects[i])
+        return result
+
+    def printLoadedObjects(self, objects = None):
+        if objects is None:
+            objects = self.sats
         '''Prints information about all loaded objects (sats, planets, asteroids etc.)'''
-        print("Loaded %d objects (sats, planets, asteroids, etc.)" % len(self.sats))
+        print("Loaded %d objects (sats, planets, asteroids, etc.)" % len(objects))
         i = 0
-        for s in self.sats:
+        for s in objects:
             print("%d: %s" % (i, s.getText()))
             i = i + 1
 
-    def getObjectsECEFvectors(self):
+    def getObjectsECEFvectors(self, sats = None):
         ''' Returns xECEF, yECEF, zECEF of all loaded objects as vectors'''
+
+        if sats is None:
+            sats = self.sats
+
         xECEF = []
         yECEF = []
         zECEF = []
 
-        for s in self.sats:
+        for s in sats:
             xECEF.append(s.x)
             yECEF.append(s.y)
             zECEF.append(s.z)
