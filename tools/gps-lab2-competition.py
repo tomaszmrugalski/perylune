@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from GpsDop import *
+from perylune.GpsDop import *
 
 def combinations(n,max):
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from OrbCalc import *
+from perylune.OrbCalc import *
 
 # GEO = 35786
 # 880km = 14 orbit/dobe

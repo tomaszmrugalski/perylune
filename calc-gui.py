@@ -2,12 +2,12 @@
 
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QGridLayout, QVBoxLayout, QLabel, \
-     QLineEdit, QTabWidget, QPushButton, QGroupBox, QTextEdit, QComboBox, QHBoxLayout
+     QLineEdit, QTabWidget, QPushButton, QGroupBox, QTextEdit, QComboBox
 from PyQt5.QtCore import pyqtSlot
 
-from OrbCalc import *
-from math import sin, cos, asin, acos, sqrt
-from AlmanacYuma import AlmanacYuma
+from perylune.OrbCalc import *
+from math import sin, cos, acos, sqrt
+from perylune.AlmanacYuma import AlmanacYuma
 
 class CalcGUI(QMainWindow):
 
