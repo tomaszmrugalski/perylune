@@ -22,6 +22,17 @@ Features under consideration at some later stage:
 - N-body problem
 - Orbital perturbations
 
+## Running GUI
+
+```python calc-gui.py```
+
+## Running unit-tests
+
+The software comes with unit-tests, written using pytest. To run them, use
+```pytest -s -v``` in the top Perylune directory.
+
+Make sure you have current directory (.) added to PYTHONPATH. 
+
 ## tools/obstacles-edit
 
 This simple script edits obstacles file for Trimble planning.
