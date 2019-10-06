@@ -87,6 +87,10 @@ all 4 element subsets out of 10 satelites and calculates DOP
 parameters for them. The results prove conclusively that chosen 4
 satelites provide the best possible choice.
 
+Usage:
+
+`python3 tools/gps-lab2-competition.py`
+
 ## smog.py
 
 Trivial script used while working on a SmogSAT project.
