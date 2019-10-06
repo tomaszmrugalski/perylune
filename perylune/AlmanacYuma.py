@@ -62,7 +62,7 @@ class AlmanacYuma:
                 offset = line.find('SQRT(A)')
                 if offset != -1:
                     line = line[26:]
-                    sat.a = float(line)^2
+                    sat.a = float(line) ** 2
                     continue
 
                 # Right ascenstion at week

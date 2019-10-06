@@ -235,7 +235,7 @@ class CalcGUITabs(QWidget):
 
         for sat in alm.sats:
             self.tab1.almanac.combo_box.addItem("%s: %s (a=%f km, e=%f)" %
-                                                (sat.id, sat.name, (sat.a_sqrt * sat.a_sqrt /1000), sat.e))
+                                                (sat.id, sat.name, (sat.a * sat.a /1000), sat.e))
 
     @pyqtSlot()
     def on_combobox_click(self):
@@ -256,7 +256,7 @@ class CalcGUITabs(QWidget):
         self.keplerian.toa.setText("%.14f" % s.toa)
         self.keplerian.incl.setText("%.14f" % s.incl)
         self.keplerian.ra_rate.setText("%.14f" % s.ra_rate)
-        self.keplerian.sqrt_a.setText("%.14f" % s.a_sqrt)
+        self.keplerian.sqrt_a.setText("%.14f" % s.a)
         self.keplerian.ra_week.setText("%.14f" % s.ra_week)
         self.keplerian.aop.setText("%.14f" % s.aop)
         self.keplerian.mean_anomaly.setText("%.14f" % s.mean_anomaly)

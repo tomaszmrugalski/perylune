@@ -17,6 +17,8 @@ def test_getObserverECEF():
     assert obs_ecef[1] == 0
     assert obs_ecef[2] == 0
 
+    # TODO: Implement a test that uses non-standard ECEF coordinates
+
 def test_getObserverLLA():
     gps = GpsDop()
     obs_lla = gps.getObserverLLA()
@@ -25,4 +27,5 @@ def test_getObserverLLA():
     assert obs_lla[1] == 0.0
     assert obs_lla[2] == 0.0
 
+    # TODO: Implement a test that uses non-standard LLA coordinates
 
