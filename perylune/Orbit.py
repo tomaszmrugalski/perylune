@@ -17,6 +17,8 @@ class Orbit:
         self.aop = 0            #
         self.mean_anomaly = 0.0 #
 
+        self.week = 0           # Yuma only
+
     def getText(self):
         return "%s: id=%s eccentricity=%f toa=%f incl=%f rate-of-ra=%8e sqrt(a)=%f ra-at-week=%f aop=%f mean-anom=%f" % \
         (self.name, self.id, self.e, self.toa, self.incl, self.ra_rate, self.a, self.ra_week, self.aop, self.mean_anomaly)

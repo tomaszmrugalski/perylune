@@ -118,6 +118,6 @@ if __name__ == '__main__':
 
         app.printAll()
     except IndexError:
-        print("Please specify filename of an alamanac to be loaded.")
+        print("Please specify filename of a Yuma almanac to be loaded.")
     except IOError:
         print("Error loading file")
