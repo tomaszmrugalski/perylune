@@ -7,7 +7,7 @@ import pytest
 def test_loadYuma():
 
     alm = AlmanacYuma()
-    alm.load("data/yuma/almanac.yuma-2019-11-29.txt")
+    alm.load("data/yuma/almanac.yuma-2019-11-29.txt", False)
 
     assert 31 == len(alm.sats)
 
@@ -26,3 +26,39 @@ def test_loadYuma():
     assert s.week == 34
 
     # AF0 and AF1 are ingnored upon load
+
+def test_recreateSpaceMissionsLab1():
+    """This test recreates calculations done during the lab classes.
+        (misje kosmiczne - lab 1)
+    """
+
+    alm = AlmanacYuma()
+    alm.load("data/yuma/misje-lab1.txt", False)
+
+    # Make sure there's exactly one sat defined
+    assert 1 == len(alm.sats)
+
+    s = alm.sats[0]
+    assert s.id == "01"
+    #assert s.health == "000"
+
+def test_yumaAppend():
+    """Checks if it's possible to append multiple alamanacs."""
+
+    alm = AlmanacYuma()
+    alm.sats.clear()
+
+    # We start with zero sats
+    assert 0 == len(alm.sats)
+
+    # Let's load the first once. There should be 31 sats in it.
+    alm.load("data/yuma/almanac.yuma-2019-11-29.txt", True)
+    assert 31 == len(alm.sats)
+
+    # Let's load it the second time. We should now have 62.
+    alm.load("data/yuma/almanac.yuma-2019-11-29.txt", True)
+    assert 62 == len(alm.sats)
+
+    # And now load with append set to false. New load should wipe the previous ones
+    alm.load("data/yuma/misje-lab1.txt", False)
+    assert 1 == len(alm.sats)

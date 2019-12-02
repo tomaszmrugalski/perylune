@@ -144,7 +144,7 @@ class CalcGUITabs(QWidget):
         almanac.layout.addWidget(almanac.load_btn, 0,0)
         almanac.load_btn.clicked.connect(self.on_load_almanac_click)
 
-        almanac_fname = 'data/almanac.yuma.week0000.061440.txt'
+        almanac_fname = 'data/yuma/almanac.yuma.week0000.061440.txt'
         name = QLineEdit(almanac_fname)
 
         almanac.layout.addWidget(name, 0,1)
@@ -235,7 +235,7 @@ class CalcGUITabs(QWidget):
 
         for sat in alm.sats:
             self.tab1.almanac.combo_box.addItem("%s: %s (a=%f km, e=%f)" %
-                                                (sat.id, sat.name, (sat.a * sat.a /1000), sat.e))
+                                                (sat.id, sat.name, (sat.a /1000), sat.e))
 
     @pyqtSlot()
     def on_combobox_click(self):

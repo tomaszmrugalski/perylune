@@ -5,7 +5,11 @@ class AlmanacYuma:
 
     sats = []
 
-    def load(self, fname):
+    def load(self, fname, append=True):
+        """loads YUMA almanac from a file. append controls whether to keep existing
+           sats info or not."""
+        if not append:
+            self.sats.clear()
         try:
             sat = None
             for line in open(fname,'r').readlines():
