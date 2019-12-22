@@ -1,0 +1,32 @@
+{
+  "name": "perylune",
+  "version": "0.1.0",
+  "description": "Participants:",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "build": "webpack",
+    "start": "webpack-dev-server --open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tomaszmrugalski/perylune"
+  },
+  "author": "Tomek Mrugalski",
+  "license": "BSD",
+  "devDependencies": {
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^5.0.4",
+    "copyfiles": "^2.1.1",
+    "ts-loader": "^6.2.0",
+    "typescript": "^3.6.4",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.8.2"
+  },
+  "dependencies": {
+    "cesium": "^1.62.0"
+  }
+}

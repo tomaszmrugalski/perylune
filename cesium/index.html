@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8">
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>Perylune UI 0.1.0 (T.Mrugalski)</title>
+    <script src="./Cesium/Cesium.js"></script>
+    <script src="./bundle.js" defer></script>
+    <link rel="stylesheet" type="text/css" href="./Cesium/Widgets/widgets.css">
+    <style>
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        table,
+        #flight-info {
+            background: rgba(42, 42, 42, 0.8);
+            padding: 4px;
+            border-radius: 4px;
+            color: aliceblue;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="buttonContainer" style="position:absolute; left: 0px; z-index:1;">
+        <button class="cesium-button button-fly-to-airport" data-airport="GDN">GDN</button>
+        <button class="cesium-button button-fly-to-airport" data-airport="MUC">MUC</button>
+        <button class="cesium-button button-fly-to-airport" data-airport="FRA">FRA</button>
+    </div>
+    <div style="position:absolute; left: 5px; top: 40px; z-index:1">
+        <table id="flightInfo" class="flight-info">
+            <thead>
+                <tr>
+                    <td>Sat</td>
+                    <td>Path</td>
+                    <td>SSP</td>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <div id="cesiumContainer">
+    </div>
+</body>
+
+</html>
