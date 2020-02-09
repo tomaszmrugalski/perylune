@@ -1,3 +1,2 @@
-
 check:
 	PYTHONPATH=. pytest -v
