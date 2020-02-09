@@ -1,9 +1,7 @@
 language: python
 
 python:
-  "3.6"
-  "3.7"
-  "3.8"
+  - "3.7"
 
 before_install:
   - python --version
@@ -11,8 +9,8 @@ before_install:
 script: make check
 
 notifications:
-  recipients:
-    - spam.travis@klub.com.pl
   email:
+    recipients:
+      - spam.travis@klub.com.pl
     on_success: change
     on_failure: always
