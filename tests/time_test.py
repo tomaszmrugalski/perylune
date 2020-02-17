@@ -4,13 +4,13 @@ def test_leap_year():
     # Tests if certain years are properly detected as leap years.
     values = [ [2000, True], [2019, False], [2001, False], [2004, True], [1900, False], [2100, False]]
 
-    for i,row in enumerate(values):
+    for _, row in enumerate(values):
         assert time.leap_year(row[0]) == row[1]
 
 def test_leap_years():
     values = [ [2000, 2000, 0], [2000, 2001, 1], [2000, 2010, 3], [2000, 2100, 25] ]
 
-    for i,row in enumerate(values):
+    for _, row in enumerate(values):
         assert time.leap_years(row[0], row[1]) == row[2]
 
 def test_days_0():
