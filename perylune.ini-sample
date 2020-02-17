@@ -1,0 +1,3 @@
+[server]
+debug = true
+datadir = /Users/thomson/devel/perylune/data
