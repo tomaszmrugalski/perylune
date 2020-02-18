@@ -3,6 +3,7 @@ import logging
 import os
 import requests
 import time
+from tle import tle
 
 from orbit_predictor.sources import NoradTLESource
 from orbit_predictor.predictors.base import Predictor
@@ -20,6 +21,9 @@ class OrbitDatabase:
         if urls is None:
             urls = CELESTRAK
         self.urls = urls
+
+        self.tle_names = {}
+        self.tle_norad = {}
 
         # Store all information in the ${DATADIR}/tle directory.
         cfg = getConfig()
@@ -103,10 +107,39 @@ class OrbitDatabase:
             raise LookupError("Could not find %s in orbit data." % (", ".join(all_sat_ids.difference(found_sat_ids))))
 
     def refresh_urls(self):
+        """Downloads all defined TLE information from Celestrak and other defined sources"""
         urls = self.urls
 
         for url in urls:
             self._get_current_tle_file(url, force_fetch=True)
+
+    def parse_all(self):
+        for url in self.urls:
+            path = self._get_current_tle_file(url)
+            self.parse_tlebulk(path)
+
+    def parse_tlebulk(self, file: str = None):
+        """Parses loaded TLE data, as downloaded from CELESTRAK. The file is essentially a
+           lot of TLE lines concatenated together."""
+
+        cnt = 0
+        with open(file) as f:
+            lines = f.readlines()
+        for i in range(int(len(lines) / 3) ):
+            name = lines[3*i].strip()
+            line1 = lines[3*i+1].strip()
+            line2 = lines[3*i+2].strip()
+            t = tle(line1, line2, name)
+            self.tle_names[name] = t
+            self.tle_norad[t.norad] = t
+            cnt += 1
+        print("Loaded %d TLEs." % cnt)
+
+    def get_name(self, l: str) -> tle:
+        return self.tle_names[l]
+
+    def get_norad(self, l: int) -> tle:
+        return self.tle_norad[l]
 
     def __str__(self):
         """This method is used when printing the orbitdb object"""
@@ -114,6 +147,7 @@ class OrbitDatabase:
         for url in self.urls:
             path = self._get_tle_path_from_url(url)
             exists = os.path.exists(path)
+            print("DEBUG: path=%s, url=%s" % (path, url) )
             if exists:
                 out_of_date = self._is_out_of_date(path)
                 creation_time = self._get_create_time(path)
