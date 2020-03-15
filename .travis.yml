@@ -5,6 +5,7 @@ python:
 
 before_install:
   - python --version
+  - cp .travis-perylune.ini perylune.ini
 
 script: make check
 
