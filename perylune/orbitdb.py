@@ -3,13 +3,13 @@ import logging
 import os
 import requests
 import time
-from tle import tle
+from perylune.tle import tle
 
 from orbit_predictor.sources import NoradTLESource
 from orbit_predictor.predictors.base import Predictor
-from conf import Config, getConfig, APP_NAME, VERSION
+from perylune.conf import Config, getConfig, APP_NAME, VERSION
 
-from utils import url_to_filename
+from perylune.  utils import url_to_filename
 
 CELESTRAK = [
     r"https://celestrak.com/NORAD/elements/active.txt"
@@ -112,6 +112,7 @@ class OrbitDatabase:
 
         for url in urls:
             self._get_current_tle_file(url, force_fetch=True)
+            self.parse_tlebulk(self._get_tle_path_from_url(url))
 
     def parse_all(self):
         for url in self.urls:
@@ -136,10 +137,16 @@ class OrbitDatabase:
         print("Loaded %d TLEs." % cnt)
 
     def get_name(self, l: str) -> tle:
+        """Attempts to return a TLE by its name, e.g. get_name("NOAA 18") """
         return self.tle_names[l]
 
     def get_norad(self, l: int) -> tle:
+        """Attempts to return a TLE by its norad number, e.g. get_name(12345) """
         return self.tle_norad[l]
+
+    def count(self) -> int:
+        """Returns number of currently loaded TLEs"""
+        return len(self.tle_norad)
 
     def __str__(self):
         """This method is used when printing the orbitdb object"""
