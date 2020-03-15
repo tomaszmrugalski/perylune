@@ -20,3 +20,5 @@ class tle():
     def setLine2(self, line: str) -> str:
         # @todo: Add sanity checks for line 2
         self.line2 = line
+
+    # @todo: add __str__ printer for TLE
