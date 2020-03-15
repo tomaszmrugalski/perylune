@@ -23,7 +23,7 @@ def getConfig(fname = "perylune.ini"):
         inifile = rootdir + os.path.sep + fname
 
         if not os.path.isfile(inifile):
-            raise Exception("satnogs.ini not found. Expected location: %s" % inifile)
+            raise Exception("The .ini file not found. Expected location: %s" % inifile)
 
         config.read(inifile)
         cfg.debug = config.get('server', 'debug')

@@ -39,6 +39,8 @@ class OrbitDatabase:
         return response.content.decode("UTF-8")
 
     def _fetch_tle_and_save(self, url, tle_path):
+        print("Downloading %s => %s" % (url, tle_path))
+
         content = self._get_tle_from_url(url)
         with open(tle_path, "w") as f:
             f.write(content)
@@ -46,6 +48,7 @@ class OrbitDatabase:
 
     def _get_tle_path_from_url(self, url):
         tle_filename = url_to_filename(url)
+
         tle_path = os.path.join(self.datadir, tle_filename)
         return tle_path
 
@@ -63,6 +66,7 @@ class OrbitDatabase:
         tle_path = self._get_tle_path_from_url(url)
         tle_path_exists = os.path.exists(tle_path)
         if not force_fetch and tle_path_exists and not self._is_out_of_date(tle_path):
+            print("%s is up-to-date, skipping download." % tle_path)
             return tle_path
 
         try:
@@ -106,12 +110,12 @@ class OrbitDatabase:
         if all_sat_ids != found_sat_ids:
             raise LookupError("Could not find %s in orbit data." % (", ".join(all_sat_ids.difference(found_sat_ids))))
 
-    def refresh_urls(self):
+    def refresh_urls(self, force_fetch = False):
         """Downloads all defined TLE information from Celestrak and other defined sources"""
         urls = self.urls
 
         for url in urls:
-            self._get_current_tle_file(url, force_fetch=True)
+            self._get_current_tle_file(url, force_fetch=force_fetch)
             self.parse_tlebulk(self._get_tle_path_from_url(url))
 
     def parse_all(self):

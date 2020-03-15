@@ -28,5 +28,4 @@ def url_to_filename(url: str) -> str:
     s = url[url.find("//")+2:]
     s = safe_filename(s, "-")
 
-    print("%s => %s" % (url, s))
     return s
