@@ -22,7 +22,13 @@ class GpsDop:
 
     sats = []
 
-    def load(self, fname):
+    def load(self, fname, clean = True):
+        """This loads the file. Expected syntax: one or more lines, each line with the
+           following syntax: name, x, y, z
+           This should define one or more sats with their ECEF positions"""
+        if clean:
+            self.sats.clear()
+
         try:
             sat = None
             for line in open(fname,'r').readlines():
@@ -44,18 +50,17 @@ class GpsDop:
         except IOError:
             print("Failed to open %s file" % fname)
 
-    def objectsSubset(self, selected, objects):
-
+    def objectsSubset(self, subset, objects):
+        """This returns a subset (defined as array, e.g. [1,2,3,8]) of the objects"""
         result=[]
-
-        for i in selected:
+        for i in subset:
             result.append(objects[i])
         return result
 
     def printLoadedObjects(self, objects = None):
+        '''Prints information about all loaded objects (sats, planets, asteroids etc.)'''
         if objects is None:
             objects = self.sats
-        '''Prints information about all loaded objects (sats, planets, asteroids etc.)'''
         print("Loaded %d objects (sats, planets, asteroids, etc.)" % len(objects))
         i = 0
         for s in objects:
@@ -179,6 +184,8 @@ class GpsDop:
         tmp1 = np.dot(G.transpose(),G)
 
         # (G^T * G)^-1
+        # Note: This may throw numpy.linalg.LinAlgError if the matrix is singular
+        # (i.e. is not reversible)
         tmp2 = np.linalg.inv(tmp1)
 
         return tmp2
@@ -210,9 +217,17 @@ class GpsDop:
         G = self.method2calculateG(AZ,HT)
         #print("G=\n%s" % G)
 
-        A = self.method2calculateA(G)
-        #print("A=\n%s" % A)
+        try:
+            A = self.method2calculateA(G)
+            #print("A=\n%s" % A)
+        except np.linalg.LinAlgError:
+            print("Unable to invert A matrix")
+            return np.array([999, 999, 999, 999, 999])
 
-        dops = self.method2calculateDOP(A)
+        try:
+            dops = self.method2calculateDOP(A)
+        except ValueError:
+            print("Unable to calculate DOP params. Primary A values negative")
+            return np.array([998, 998, 998, 998, 998])
 
         return dops

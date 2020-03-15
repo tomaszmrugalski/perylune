@@ -1,7 +1,7 @@
 # Dane pochodza z przedmiotu GPS, laborka 2
 # Przedstawiaja przykladowe wspolrzedne n satelitow GPS
 # Format danych:
-# nazwa satelity, x, Y, z (w ukladzie wsp. ECEF)
+# nazwa satelity, x, y, z (w ukladzie wsp. ECEF)
 SV0, 14842944, 4743470, 21508234
 SV5, 24048184, -11177798, 14694528
 SV7, 23358305, -2181549, 12451828
