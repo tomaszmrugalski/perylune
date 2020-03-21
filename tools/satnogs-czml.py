@@ -23,10 +23,13 @@ def czml_add_sat(extr, sat_name):
     # Convert to poliastro orbit
     orb = tle.to_orbit()
 
+    descr = "<b>%s</b><br/><br/><b>TLE info:</b><br/>%s<br/>%s<br/><br/><b>Orbit details</b><br/>%s" % (sat_name, t.line1, t.line2, orb)
+
     extr.add_orbit(
         orb,
         rtol=1e-4,
         label_text=sat_name,
+        id_description=descr,
         groundtrack_show=True,
         label_fill_color=[125, 80, 120, 255],
     )
