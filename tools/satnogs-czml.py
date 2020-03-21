@@ -6,46 +6,48 @@
 from tletools import TLE
 from perylune import orbitdb
 from perylune import utils
+from datetime import date
 from poliastro.czml.extract_czml import CZMLExtractor
+from astropy import time
 
 db = orbitdb.OrbitDatabase()
 db.refresh_urls()
 
-def czml_generate(extr, name):
-    t = db.get_name(name)
+def czml_add_sat(extr, sat_name):
+
+    print("Propagating sat %s" % sat_name)
+    t = db.get_name(sat_name)
 
     tle = TLE.from_lines(t.name, t.line1, t.line2)
 
     # Convert to poliastro orbit
     orb = tle.to_orbit()
 
-    start_epoch = orb.epoch
-    end_epoch = orb.epoch + orb.period
+    extr.add_orbit(
+        orb,
+        rtol=1e-4,
+        label_text=sat_name,
+        groundtrack_show=True,
+        label_fill_color=[125, 80, 120, 255],
+    )
+
+def czml_write(fname, sats_list, start_epoch, end_epoch):
+    fname = utils.safe_filename(fname)
 
     sample_points = 100
 
     extractor = CZMLExtractor(start_epoch, end_epoch, sample_points)
 
-    extractor.add_orbit(
-        orb,
-        rtol=1e-4,
-        label_text=name,
-        groundtrack_show=True,
-        label_fill_color=[125, 80, 120, 255],
-    )
+    for s in sats_list:
+        czml_add_sat(extractor, s)
 
-    return extractor.packets
-
-
-
-def czml_write(name):
-    fname = utils.safe_filename(name) + ".czml"
-    pkts = czml_generate(name)
     f = open(fname, "w")
-    f.write(repr(pkts))
+    f.write(repr(extractor.packets))
     f.close()
     print("Content written to %s" % fname)
 
-czml_write("NOAA 15")
-czml_write("NOAA 18")
-czml_write("NOAA 19")
+
+start_epoch = time.Time("2020-03-22 12:00", scale="utc")
+end_epoch = time.Time("2020-03-23 12:00", scale="utc")
+
+czml_write("satnogs.czml", [ "NOAA 15", "NOAA 18", "NOAA 19", "METEOR-M 2", "ISS (ZARYA)" ] , start_epoch, end_epoch)
