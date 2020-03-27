@@ -1,7 +1,7 @@
 # OrbCalc_test.py
 
-from perylune.GpsDop import GpsDop
-from perylune.OrbCalc import OrbCalc
+from perylune.gpsdop import GpsDop
+from perylune.orbcalc import OrbCalc
 
 import numpy as np
 

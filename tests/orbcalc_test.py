@@ -1,6 +1,6 @@
 
 
-from perylune.OrbCalc import *
+from perylune.orbcalc import *
 
 def test_deg2rad_case():
     rad = OrbCalc.deg2rad(360)
