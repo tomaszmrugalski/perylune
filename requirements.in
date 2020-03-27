@@ -5,6 +5,7 @@ sgp4
 orbit_predictor
 czml3
 tle-tools
+poliastro
 
 # Poliastro rocks!
--e git+https://github.com/poliastro/poliastro#egg=poliastro
+#-e git+https://github.com/poliastro/poliastro#egg=poliastro
