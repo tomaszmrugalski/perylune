@@ -1,0 +1,207 @@
+[{
+    "id": "document",
+    "version": "1.0",
+    "name": "document_packet",
+    "clock": {
+        "interval": "2020-03-27T00:00:00Z/2020-03-28T00:00:00Z",
+        "currentTime": "2020-03-27T00:00:00Z",
+        "multiplier": 60,
+        "range": "LOOP_STOP",
+        "step": "SYSTEM_CLOCK_MULTIPLIER"
+    }
+}, {
+    "id": "custom_properties",
+    "properties": {
+        "custom_attractor": true,
+        "ellipsoid": [
+            {
+                "array": [
+                    6378136.6,
+                    6378136.6,
+                    6356751.9
+                ]
+            }
+        ],
+        "map_url": [
+            "https://upload.wikimedia.org/wikipedia/commons/c/c4/Earthmap1000x500compac.jpg"
+        ],
+        "scene3D": true
+    }
+}, {
+    "id": 0,
+    "availability": "2020-03-27T00:00:00Z/2020-03-28T00:00:00Z",
+    "position": {
+        "epoch": "2020-03-27T00:01:09Z",
+        "interpolationAlgorithm": "LAGRANGE",
+        "interpolationDegree": 5,
+        "referenceFrame": "INERTIAL",
+        "cartesian": [
+            0.0,
+            -3289299.394,
+            20633191.453,
+            41203531.2254,
+            8640.0,
+            -14492068.1774,
+            15686600.9827,
+            31325418.3136,
+            17280.0,
+            -13488090.6624,
+            1285110.2188,
+            2566305.8063,
+            25920.0,
+            17442353.8955,
+            10494445.8351,
+            20956924.0728,
+            34560.0,
+            9044573.3912,
+            19148952.1759,
+            38239573.8783,
+            43200.0,
+            -3325345.0354,
+            20628521.354,
+            41194205.2532,
+            51840.0,
+            -14517391.924,
+            15661631.8614,
+            31275556.1305,
+            60480.0,
+            -13408512.931,
+            1221250.0021,
+            2438779.9004,
+            69120.0,
+            17434659.3112,
+            10533336.6091,
+            21034587.1539,
+            77760.0,
+            9011293.0875,
+            19162420.4698,
+            38266469.4398,
+            86400.0,
+            -3361382.3433,
+            20623799.5587,
+            41184776.0459,
+            95040.0,
+            -14542649.6588,
+            15636591.5254,
+            31225551.7351
+        ]
+    },
+    "billboard": {
+        "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADJSURBVDhPnZHRDcMgEEMZjVEYpaNklIzSEfLfD4qNnXAJSFWfhO7w2Zc0Tf9QG2rXrEzSUeZLOGm47WoH95x3Hl3jEgilvDgsOQUTqsNl68ezEwn1vae6lceSEEYvvWNT/Rxc4CXQNGadho1NXoJ+9iaqc2xi2xbt23PJCDIB6TQjOC6Bho/sDy3fBQT8PrVhibU7yBFcEPaRxOoeTwbwByCOYf9VGp1BYI1BA+EeHhmfzKbBoJEQwn1yzUZtyspIQUha85MpkNIXB7GizqDEECsAAAAASUVORK5CYII=",
+        "show": true
+    },
+    "label": {
+        "text": "Molniya",
+        "font": "11pt Lucida Console",
+        "style": "FILL",
+        "fillColor": {
+            "rgba": [
+                125,
+                80,
+                120,
+                255
+            ]
+        },
+        "outlineColor": {
+            "rgba": [
+                255,
+                255,
+                0,
+                255
+            ]
+        },
+        "outlineWidth": 1.0
+    },
+    "path": {
+        "resolution": 120,
+        "material": {
+            "solidColor": {
+                "color": {
+                    "rgba": [
+                        255,
+                        255,
+                        0,
+                        255
+                    ]
+                }
+            }
+        }
+    }
+}, {
+    "id": "groundtrack0",
+    "availability": "2020-03-27T00:00:00Z/2020-03-28T00:00:00Z",
+    "position": {
+        "epoch": "2020-03-27T00:01:09Z",
+        "interpolationAlgorithm": "LAGRANGE",
+        "interpolationDegree": 5,
+        "referenceFrame": "INERTIAL",
+        "cartesian": [
+            0.0,
+            -452908.5371394126,
+            2841015.617730281,
+            5673376.991950734,
+            8640.0,
+            -2432444.1365771885,
+            2632942.5954927527,
+            5257864.767937018,
+            17280.0,
+            -6237738.233805191,
+            594315.5947289758,
+            1186820.7186401759,
+            25920.0,
+            3801278.8918920313,
+            2287094.7561815376,
+            4567222.591786426,
+            34560.0,
+            1316323.773874735,
+            2786888.766695645,
+            5565288.168076569,
+            43200.0,
+            -457949.3971919372,
+            2840854.471895604,
+            5673055.191155432,
+            51840.0,
+            -2439391.1194607425,
+            2631660.624502745,
+            5255304.731017502,
+            60480.0,
+            -6249472.071033852,
+            569203.2578202594,
+            1136672.540654449,
+            69120.0,
+            3791129.5559922555,
+            2290451.6640857705,
+            4573926.181971595,
+            77760.0,
+            1310802.4906057403,
+            2787407.669336394,
+            5566324.39271559,
+            86400.0,
+            -462991.68977420044,
+            2840691.486583712,
+            5672729.717012523,
+            95040.0,
+            -2446350.1172024417,
+            2630372.141680923,
+            5252731.6902988795
+        ]
+    },
+    "path": {
+        "show": true,
+        "leadTime": 100,
+        "trailTime": 100,
+        "resolution": 60,
+        "material": {
+            "solidColor": {
+                "color": {
+                    "rgba": [
+                        255,
+                        255,
+                        0,
+                        255
+                    ]
+                }
+            }
+        }
+    }
+}]
