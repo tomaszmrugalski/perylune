@@ -1,6 +1,4 @@
-#!/usr/bin/env python3
-
-from perylune.OrbCalc import *
+from perylune.orbcalc import *
 import numpy as np
 from math import *
 

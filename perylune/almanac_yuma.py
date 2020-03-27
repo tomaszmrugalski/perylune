@@ -1,5 +1,5 @@
 import sys
-from perylune.Orbit import *
+from perylune.orbit import *
 
 class AlmanacYuma:
 

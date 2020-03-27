@@ -1,6 +1,4 @@
-# OrbCalc_test.py
-
-from perylune.AlmanacYuma import *
+from perylune.almanac_yuma import *
 
 import pytest
 
