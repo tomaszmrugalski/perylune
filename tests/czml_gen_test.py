@@ -1,4 +1,4 @@
-from perylune.czml_gen import *
+from perylune.czml_gen import CzmlGenerator, get_today
 from poliastro.czml.extract_czml import CZMLExtractor
 from poliastro.bodies import Mars
 from poliastro.examples import iss, molniya  # noqa: E402
@@ -6,8 +6,8 @@ from astropy import time
 from datetime import datetime
 import pytest
 
-#@pytest.mark.skipif(True, reason="test in progress")
 def test_czml_basic():
+    """Check if molniya orbit could be propagated"""
 
     start_epoch = time.core.Time("2020-03-27 00:00:00", scale='utc')
     end_epoch = start_epoch + 1
@@ -40,36 +40,10 @@ def test_czml_time():
     assert repr(start_time) == exp_str
 
 @pytest.mark.skipif(True, reason="test in progress")
-def test_czml_demo_noaa():
-    from perylune import orbitdb
-    odb = orbitdb.OrbitDatabase()
-    odb.parse_all()
-    noaa15 = odb.get_name("NOAA 15")
-    noaa18 = odb.get_name("NOAA 18")
-    noaa19 = odb.get_name("NOAA 19")
+def test_czml_add_sat():
+    # Need to figure out how to mock this.
+    pass
 
-    assert noaa15
-    assert noaa18
-    assert noaa19
-
-    f = open("tle.txt", "w")
-    f.write("%s\n" % noaa15.name)
-    f.write("%s\n" % noaa15.line1)
-    f.write("%s\n" % noaa15.line2)
-    f.write("%s\n" % noaa18.name)
-    f.write("%s\n" % noaa18.line1)
-    f.write("%s\n" % noaa18.line2)
-    f.write("%s\n" % noaa19.name)
-    f.write("%s\n" % noaa19.line1)
-    f.write("%s\n" % noaa19.line2)
-    f.close()
-
-    y = 2020
-    m = 2
-    d = 19
-
-    prop15 = propagate(noaa15, y, m, d, 300, 288)
-    prop18 = propagate(noaa18, y, m, d, 300, 288)
-    prop19 = propagate(noaa19, y, m, d, 300, 288)
-    return [ prop15, prop18, prop19 ]
-
+@pytest.mark.skipif(True, reason="test in progress")
+def test_czml_add_sats():
+    pass
