@@ -32,6 +32,10 @@ Alternatively, there's a make script for that:
 make setup
 ```
 
+## Web interface Installation
+
+See [cesium howto](doc/cesium.md)
+
 ## Running unit-tests
 
 The software comes with unit-tests. You can run them using pytest. Here's how

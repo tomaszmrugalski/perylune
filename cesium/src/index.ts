@@ -57,6 +57,10 @@ handler.setInputAction(function(movement) {
 
 initGroundStations(viewer, groundStations);
 
-viewer.dataSources.add(Cesium.CzmlDataSource.load('../data/iss.czml.json'));
-viewer.dataSources.add(Cesium.CzmlDataSource.load('../data/noaa-15.czml.json'));
+//viewer.dataSources.add(Cesium.CzmlDataSource.load('/czml/iss.czml'));
+
+viewer.dataSources.add(Cesium.CzmlDataSource.load('/czml/satnogs-fixed.czml'));
+
+//viewer.dataSources.add(Cesium.CzmlDataSource.load('/czml/iss.czml.json'));
+//viewer.dataSources.add(Cesium.CzmlDataSource.load('/czml/noaa-15.czml.json'));
 
