@@ -40,21 +40,27 @@
 
 <body>
     <div id="buttonContainer" style="position:absolute; left: 0px; z-index:1;">
-        <button class="cesium-button button-fly-to-airport" data-airport="GDN">GDN</button>
-        <button class="cesium-button button-fly-to-airport" data-airport="MUC">MUC</button>
-        <button class="cesium-button button-fly-to-airport" data-airport="FRA">FRA</button>
+        <button class="cesium-button button-fly-to" data-name="globe">Globe</button>
+        <button class="cesium-button button-fly-to" data-name="tkis-1">Stations</button>
     </div>
     <div style="position:absolute; left: 5px; top: 40px; z-index:1">
         <table id="flightInfo" class="flight-info">
             <thead>
                 <tr>
-                    <td>Sat</td>
-                    <td>Path</td>
-                    <td>SSP</td>
+                    <td><b>Satellies</b></td>
                 </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>
+                <tr><td>NOAA 15</td></tr>
+                <tr><td>NOAA 18</td></tr>
+                <tr><td>NOAA 19</td></tr>
+                <tr><td>Meteor-M 2</td></tr>
+                <tr><td>ISS</td></tr>
+            </tbody>
         </table>
+        <p style="color: aliceblue">
+            <a href="https://github.com/tomaszmrugalski/perylune">Perylune 0.1.0</a><br/>Tomek Mrugalski
+        </p>
     </div>
     <div id="cesiumContainer">
     </div>

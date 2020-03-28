@@ -1,22 +1,5 @@
 import { GroundStation, StationName } from "./model";
 
-// This function is called when Move camera button is pressed.
-// It flies to Tatry mountains.
-// @param string airport
-export function flyCameraTo(viewer: Cesium.Viewer, airport: GroundStation): void {
-
-    const destCartographic = airport.toCartographic();
-    destCartographic.height += 1500;
-    const dest = Cesium.Ellipsoid.WGS84.cartographicToCartesian(destCartographic);
-
-    // Sandcastle.declare(flyToSanDiego);
-    viewer.camera.flyTo({
-        destination : dest
-    });
-
-    // We should also stop tracking any existing objects (if any)
-    viewer.trackedEntity = undefined;
-}
 
 function getVisibleValue(shouldVisible: boolean | undefined): boolean | undefined {
     if (typeof shouldVisible === 'undefined') {
@@ -28,25 +11,6 @@ function getVisibleValue(shouldVisible: boolean | undefined): boolean | undefine
         return false;
     } else {
         return undefined;
-    }
-}
-
-// For now this is basic label that displays airport designation.
-// @todo: expand this label (possibly turn this into a Billboard,
-// perhaps write departures and arrivals?
-export function initGroundStations(viewer: Cesium.Viewer, airports: GroundStation[]) {
-    for (var airport of airports) {
-      const coords = airport.toCarthesian();
-      viewer.entities.add({
-        position: coords,
-        label : {
-            showBackground : true,
-            font : '14px monospace',
-            horizontalOrigin : Cesium.HorizontalOrigin.LEFT,
-            verticalOrigin : Cesium.VerticalOrigin.TOP,
-            text: airport.name
-        }
-      });
     }
 }
 
