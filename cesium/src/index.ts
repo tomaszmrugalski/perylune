@@ -10,8 +10,8 @@ Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOi
 // It has one parameter: terrainProvider, which creates terrain. Without it, the Earth surface would be completely flat.
 export const viewer = new Cesium.Viewer('cesiumContainer', {
     //terrainProvider: Cesium.createWorldTerrain(),
-    infoBox : false,
-    selectionIndicator : false,
+    infoBox : true,
+    selectionIndicator : true,
     shadows : true,
     shouldAnimate : true
 });
@@ -29,6 +29,7 @@ const coordsLabel = viewer.entities.add({
         pixelOffset : new Cesium.Cartesian2(15, 0)
     }
 });
+
 
 // Mouse over the globe to see the cartographic position
 const handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
@@ -56,6 +57,7 @@ handler.setInputAction(function(movement) {
 }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
 
 initGroundStations(viewer, groundStations);
+
 
 //viewer.dataSources.add(Cesium.CzmlDataSource.load('/czml/iss.czml'));
 
