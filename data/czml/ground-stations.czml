@@ -1,0 +1,118 @@
+[
+{
+    "id": "document",
+    "version": "1.0",
+    "name": "document_packet",
+    "clock": {
+        "interval": "2020-03-28T00:00:00Z/2020-03-29T00:00:00Z",
+        "currentTime": "2020-03-28T00:00:00Z",
+        "multiplier": 60,
+        "range": "LOOP_STOP",
+        "step": "SYSTEM_CLOCK_MULTIPLIER"
+    }
+},
+    {
+    "id":"ground-station-eti-1",
+    "name":"ETI-1",
+    "availability":"2020-03-28T00:00:00Z/2020-03-29T00:00:00Z",
+    "description":"<!--HTML-->\r\n<p>\r\nThe second ground station (under construction) is being planned at <a href=\"https://eti.pg.edu.pl\">ETI faculty</a> of <a href=\"https://pg.edu.pl\">Gdańsk University of Technology</a>.\r\n</p>",
+    "billboard":{
+      "eyeOffset":{
+        "cartesian":[
+          0,0,0
+        ]
+      },
+      "horizontalOrigin":"CENTER",
+      "image":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACvSURBVDhPrZDRDcMgDAU9GqN0lIzijw6SUbJJygUeNQgSqepJTyHG91LVVpwDdfxM3T9TSl1EXZvDwii471fivK73cBFFQNTT/d2KoGpfGOpSIkhUpgUMxq9DFEsWv4IXhlyCnhBFnZcFEEuYqbiUlNwWgMTdrZ3JbQFoEVG53rd8ztG9aPJMnBUQf/VFraBJeWnLS0RfjbKyLJA8FkT5seDYS1Qwyv8t0B/5C2ZmH2/eTGNNBgMmAAAAAElFTkSuQmCC",
+      "pixelOffset":{
+        "cartesian2":[
+          0,0
+        ]
+      },
+      "scale":1.5,
+      "show":true,
+      "verticalOrigin":"CENTER"
+    },
+    "label":{
+      "fillColor":{
+        "rgba":[
+          0,255,255,255
+        ]
+      },
+      "font":"11pt Lucida Console",
+      "horizontalOrigin":"LEFT",
+      "outlineColor":{
+        "rgba":[
+          0,0,0,255
+        ]
+      },
+      "outlineWidth":2,
+      "pixelOffset":{
+        "cartesian2":[
+          12,0
+        ]
+      },
+      "show":true,
+      "style":"FILL_AND_OUTLINE",
+      "text":"ETI-1",
+      "verticalOrigin":"CENTER"
+    },
+    "position":{
+      "cartesian":[
+        3528966.3851320823, 1188537.200673965, 5160901.21347148
+      ]
+    }
+  },
+  {
+    "id":"ground-station-tkis-1",
+    "name":"TKiS-1",
+    "availability":"2020-03-28T00:00:00Z/2020-03-29T00:00:00Z",
+    "description":"<!--HTML-->\r\n<p>\r\nThis is the first station, designed and deployed as part of the group project by students of TKiS (Technologie Kosmiczne i Satelitarne, polish name of Space and satellite technologies).\r\n</p>",
+    "billboard":{
+      "eyeOffset":{
+        "cartesian":[
+          0,0,0
+        ]
+      },
+      "horizontalOrigin":"CENTER",
+      "image":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACvSURBVDhPrZDRDcMgDAU9GqN0lIzijw6SUbJJygUeNQgSqepJTyHG91LVVpwDdfxM3T9TSl1EXZvDwii471fivK73cBFFQNTT/d2KoGpfGOpSIkhUpgUMxq9DFEsWv4IXhlyCnhBFnZcFEEuYqbiUlNwWgMTdrZ3JbQFoEVG53rd8ztG9aPJMnBUQf/VFraBJeWnLS0RfjbKyLJA8FkT5seDYS1Qwyv8t0B/5C2ZmH2/eTGNNBgMmAAAAAElFTkSuQmCC",
+      "pixelOffset":{
+        "cartesian2":[
+          0,0
+        ]
+      },
+      "scale":1.5,
+      "show":true,
+      "verticalOrigin":"CENTER"
+    },
+    "label":{
+      "fillColor":{
+        "rgba":[
+          0,255,255,255
+        ]
+      },
+      "font":"11pt Lucida Console",
+      "horizontalOrigin":"LEFT",
+      "outlineColor":{
+        "rgba":[
+          0,0,0,255
+        ]
+      },
+      "outlineWidth":2,
+      "pixelOffset":{
+        "cartesian2":[
+          12,0
+        ]
+      },
+      "show":true,
+      "style":"FILL_AND_OUTLINE",
+      "text":"TKiS-1",
+      "verticalOrigin":"CENTER"
+    },
+    "position":{
+      "cartesian":[
+        3532232.772395696, 1184047.9870634037, 5159706.471019858
+      ]
+    }
+  }
+]
