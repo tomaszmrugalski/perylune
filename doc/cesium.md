@@ -9,3 +9,10 @@ npm install
 npm start
 ```
 
+To build release version, do:
+
+```
+npm run build
+```
+
+and then you should get the package in dist/ directory.

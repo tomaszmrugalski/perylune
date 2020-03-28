@@ -64,8 +64,8 @@ handler.setInputAction(function(movement) {
 
 
 
-viewer.dataSources.add(Cesium.CzmlDataSource.load('/czml/satnogs-fixed.czml'));
-viewer.dataSources.add(Cesium.CzmlDataSource.load('/czml/ground-stations.czml'));
+viewer.dataSources.add(Cesium.CzmlDataSource.load('czml/satnogs-fixed.czml'));
+viewer.dataSources.add(Cesium.CzmlDataSource.load('czml/ground-stations.czml'));
 
 // This function is called when Move camera button is pressed.
 // @param string airport
