@@ -1,7 +1,5 @@
-from perylune import tle
-from sgp4.earth_gravity import wgs72
-from sgp4.io import twoline2rv
-from typing import Sequence
+from perylune import tle, orbitdb
+from tletools import TLE
 from astropy import time
 from datetime import datetime
 
@@ -18,36 +16,44 @@ class CzmlGenerator():
                 attractor: Body = None, pr_map: str = None, scene3D : bool = True):
         self.extractor = CZMLExtractor(start_epoch, end_epoch, sample_points, attractor, pr_map, scene3D)
 
-    def f(self, start_epoch: time.core.Time = 0):
-        pass
+    def init_db(self):
+        """Initializes list of TLE orbits. Needed only when using add_sat() or add_sats()"""
+        if 'db' in self.__dict__:
+            return
 
+        self.db = orbitdb.OrbitDatabase()
+        self.db.refresh_urls()
+
+    def add_sat(self, sat_name):
+
+        self.init_db()
+
+        print("Propagating sat %s" % sat_name)
+        t = self.db.get_name(sat_name)
+
+        tle = TLE.from_lines(t.name, t.line1, t.line2)
+
+        # Convert to poliastro orbit
+        orb = tle.to_orbit()
+
+        descr = "<b>%s</b><br/><br/><b>TLE info:</b><br/>%s<br/>%s<br/><br/><b>Orbit details</b><br/>%s" % (sat_name, t.line1, t.line2, orb)
+
+        self.extractor.add_orbit(
+            orb,
+            rtol=1e-4,
+            label_text=sat_name,
+            id_description=descr,
+            groundtrack_show=True,
+            label_fill_color=[125, 80, 120, 255],
+        )
+
+    def add_sats(self, sats_list):
+        for s in sats_list:
+            self.add_sat(s)
 
     def write(self, fname: str):
         """Writes content of the CzmlGenerator to a file"""
         f = open(fname, "w")
         f.write(repr(self.extractor.packets))
         f.close()
-
-"""
-        Orbital constructor
-
-        Parameters
-        ----------
-        start_epoch: ~astropy.time.core.Time
-            Starting epoch
-        end_epoch: ~astropy.time.core.Time
-            Ending epoch
-        N: int
-            Default number of sample points.
-            Unless otherwise specified, the number
-            of sampled data points will be N when calling
-            add_orbit()
-        attractor: poliastro.Body
-            Attractor of the orbits
-        pr_map: str
-            A URL to the projection of the defined ellipsoid (UV map)
-        scene3D: bool
-            Determines the scene mode. If set to true, the scene
-            is set to 3D mode, otherwise it's the orthographic
-            projection.
-        """
+        print("Content (%d bytes) written to %s." % (len(repr(self.extractor.packets)), fname))
