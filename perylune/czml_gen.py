@@ -43,8 +43,8 @@ class CzmlGenerator():
             rtol=1e-4,
             label_text=sat_name,
             id_description=descr,
-            groundtrack_show=True,
-            label_fill_color=[125, 80, 120, 255],
+            groundtrack_show=True
+            #label_fill_color=[125, 80, 120, 255],
         )
 
     def add_sats(self, sats_list):
