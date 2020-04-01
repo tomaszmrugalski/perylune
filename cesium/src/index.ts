@@ -1,6 +1,5 @@
 
-import { showCursorLabel } from "./cursor_label";
-import { czmlViewer } from "./czml_viewer";
+import { showCursorLabel } from "./utils/cursor_label";
 import { run } from "./scenarios/01-satnogs/satnogs";
 
 // This is Tomek's private token generated when signed up for Cesium.
