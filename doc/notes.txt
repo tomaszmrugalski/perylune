@@ -31,3 +31,23 @@ stropy.coordinates.spherical_to_cartesian(astropy.constants.R_earth, 54.352469/1
 (<Quantity 3528090.50317684 m>, <Quantity 1170343.09459393 m>, <Quantity 5182956.11136441 m>)
 
 Those values are a bit off (located at Gdansk Bay rather then where it's supposed)
+
+-----
+
+How to import TLE data from CELESTRAK:
+
+import orbitdb
+odb = orbitdb.OrbitDatabase()
+odb.refresh_urls()
+print(odb)
+odb.get_predictor("SURCAL 159") - search TLE info by name
+
+odb.get_name("NOAA 18")
+odb.get_norad(28654)
+
+
+How to propagate TLE and export to CZML
+import tle2czml
+
+
+
