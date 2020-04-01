@@ -1,7 +1,7 @@
 
 import { showCursorLabel } from "./cursor_label";
 import { czmlViewer } from "./czml_viewer";
-import { run } from "./scenario01-satnogs/satnogs";
+import { run } from "./scenarios/01-satnogs/satnogs";
 
 // This is Tomek's private token generated when signed up for Cesium.
 // cspell: disable-next-line
