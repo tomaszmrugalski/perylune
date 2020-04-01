@@ -1,6 +1,6 @@
 
 import { showCursorLabel } from "./utils/cursor_label";
-import { run } from "./scenarios/01-satnogs/satnogs";
+import { czmlViewer } from "./scenarios/02-gnss/czml_viewer";
 
 // This is Tomek's private token generated when signed up for Cesium.
 // cspell: disable-next-line
@@ -9,12 +9,10 @@ Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOi
 // STEP 0: CREATE CESIUM WIDGET
 var rectangle = Cesium.Rectangle.fromDegrees(14,51,21,54);
 Cesium.Camera.DEFAULT_VIEW_RECTANGLE = rectangle;
-Cesium.Camera.DEFAULT_VIEW_FACTOR = 3;
+Cesium.Camera.DEFAULT_VIEW_FACTOR = 10;
 
 // This creates the top-level widget for Cesium.
-// It has one parameter: terrainProvider, which creates terrain. Without it, the Earth surface would be completely flat.
 export const viewer = new Cesium.Viewer('cesiumContainer', {
-    //terrainProvider: Cesium.createWorldTerrain(),
     infoBox : true,
     selectionIndicator : true,
     shadows : true,
@@ -23,7 +21,6 @@ export const viewer = new Cesium.Viewer('cesiumContainer', {
 
 showCursorLabel(viewer);
 
-// Run the code from scenario01-satnogs/satnogs
-run(viewer);
+czmlViewer(viewer);
 
 
