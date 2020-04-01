@@ -28,6 +28,6 @@
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
-    "cesium": "^1.67.0"
+    "cesium": "^1.68.0"
   }
 }
