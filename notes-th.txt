@@ -1,0 +1,12 @@
+# Poliastro + jupyter installation
+
+python -m venv venv
+source venv/bin/activate
+
+pip install wheel
+pip install Poliastro
+
+pip install jupyterlab
+
+jupyterlab
+
