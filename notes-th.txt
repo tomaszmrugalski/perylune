@@ -8,5 +8,6 @@ pip install Poliastro
 
 pip install jupyterlab
 
-jupyterlab
+pip install tle-tools
 
+jupyterlab
