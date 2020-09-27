@@ -23,10 +23,13 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(),
-    new CopyPlugin([
+    new CopyPlugin(
+    {
+      patterns: [
         { from: "./index.html", to: "./index.html" },
         { from: "node_modules/cesium/Build/Cesium", to: "./Cesium" },
         { from: "./assets", to: "./assets" }
-    ])
+      ]
+    })
   ]
 };
