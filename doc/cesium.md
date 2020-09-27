@@ -17,4 +17,10 @@ npm run build
 
 and then you should get the package in dist/ directory.
 
+Upgrading to latest cesium:
+
+```
+npm install cesium
+```
+
 Note: the labels will be shown as random garbage if firefox's resistFingerprinting feature is turned on.
