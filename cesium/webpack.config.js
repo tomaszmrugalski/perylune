@@ -5,6 +5,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 module.exports = {
   entry: './src/index.ts',
   devtool: 'inline-source-map',
+  mode: 'development',
   module: {
     rules: [
       {
@@ -27,8 +28,7 @@ module.exports = {
     {
       patterns: [
         { from: "./index.html", to: "./index.html" },
-        { from: "node_modules/cesium/Build/Cesium", to: "./Cesium" },
-        { from: "./assets", to: "./assets" }
+        { from: "node_modules/cesium/Build/Cesium", to: "./Cesium" }
       ]
     })
   ]
