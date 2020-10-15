@@ -4,7 +4,7 @@ python -m venv venv
 source venv/bin/activate
 
 pip install wheel
-pip install Poliastro
+pip install poliastro
 
 pip install jupyterlab
 
