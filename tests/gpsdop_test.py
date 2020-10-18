@@ -89,11 +89,10 @@ def test_DopCalculation_many():
 
     # Generate all 4 element combination of those sats
     combs = combinations(4, len(gps.sats))
-    print("len(gps.sats)= %d" % len(gps.sats))
     assert len(combs) == 210
 
     # Print out the header (suppressed by pytest, but we don't care)
-    print("Number, sat1,sat2,sat3,sat4, GDOP, PDOP, HDOP, VDOP, TDOP")
+    # print("Number, sat1,sat2,sat3,sat4, GDOP, PDOP, HDOP, VDOP, TDOP")
 
     cnt = 0
 
@@ -116,7 +115,7 @@ def test_DopCalculation_many():
         assert dops[4] not in [998, 999]
 
         # Print out the values
-        print("%d, %d,%d,%d,%d,  %f, %f, %f, %f, %f" % (cnt, c[0], c[1], c[2], c[3], dops[0], dops[1], dops[2], dops[3], dops[4]))
+        # print("%d, %d,%d,%d,%d,  %f, %f, %f, %f, %f" % (cnt, c[0], c[1], c[2], c[3], dops[0], dops[1], dops[2], dops[3], dops[4]))
         cnt += 1
 
     # Make sure the code checked 210 combinations
