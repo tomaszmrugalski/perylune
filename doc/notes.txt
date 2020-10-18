@@ -1,3 +1,5 @@
+
+
 # Backend Ideas
 
 
@@ -37,3 +39,18 @@ Those values are a bit off (located at Gdansk Bay rather then where it's suppose
 
 
 
+---
+
+# Poliastro + jupyter installation
+
+python -m venv venv
+source venv/bin/activate
+
+pip install wheel
+pip install poliastro
+
+pip install jupyterlab
+
+pip install tle-tools
+
+jupyterlab

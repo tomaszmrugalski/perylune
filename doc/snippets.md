@@ -1,5 +1,5 @@
 
-
+This file contains a collection of random code snippets that I found useful at one time.
 
 ## How to import TLE data from CELESTRAK:
 
@@ -28,5 +28,6 @@ tle_lines = tle_text.strip().splitlines()
 tle1 = TLE.from_lines(*tle_lines)
 orb1 = tle1.to_orbit() # This returns poliastro's orbit object
 
-a, e, i, raan, argp, nu = o.classical() # and this is how to access classical elements
+a, e, i, raan, argp, nu = orb1.classical() # and this is how to access classical elements
 ```
+

@@ -32,19 +32,14 @@ Alternatively, there's a make script for that:
 make setup
 ```
 
-## Web interface Installation
+## Additional docs
 
-See [cesium howto](doc/cesium.md)
+See [cesium howto](doc/cesium.md) for details on how to run Cesium (a web interface useful for visualising orbits)
 
-## Running unit-tests
+See [snippets](doc/snippets.md) for a random chunks of python code that does various things.
 
-The software comes with unit-tests. You can run them using pytest. Here's how
-you can do that (make sure )
+## Developer's guide
 
-```
-export PYTHONPATH=.:poliastro/src
-pytest -s -v
-```
-in the top Perylune directory.
+See [tests](doc/tests.md) for details on running tests.
 
-Make sure you have current directory (.) and poliastro added to PYTHONPATH.
+See [developer's guide](doc/devel.md) for developer oriented notes.
