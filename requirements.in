@@ -6,5 +6,8 @@ orbit_predictor
 czml3
 tle-tools
 
+# The following deps are needed for developers only
+pytest
+
 # Poliastro rocks!
--e git+https://github.com/poliastro/poliastro#egg=poliastro
+#-e git+https://github.com/poliastro/poliastro#egg=poliastro
