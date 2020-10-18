@@ -1,6 +1,6 @@
 # Perylune
 
-[![Build Status](https://travis-ci.org/tomaszmrugalski/perylune.svg?branch=master)](https://travis-ci.org/tomaszmrugalski/perylune)
+[![Build Status](https://travis-ci.com/tomaszmrugalski/perylune.svg?branch=master)](https://travis-ci.com/tomaszmrugalski/perylune)
 
 Perylune - a [periapsis](https://en.wikipedia.org/wiki/Apsis) (a lowest point in orbit) around Luna (better
 known as the Moon). Also a library of tools intended to aid various
