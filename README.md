@@ -34,6 +34,8 @@ make setup
 
 ## Additional docs
 
+See [jupyter howto](doc/jupyter.md) for details on how to view Jupyter notebooks.
+
 See [cesium howto](doc/cesium.md) for details on how to run Cesium (a web interface useful for visualising orbits)
 
 See [snippets](doc/snippets.md) for a random chunks of python code that does various things.
