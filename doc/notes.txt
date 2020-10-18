@@ -34,20 +34,6 @@ Those values are a bit off (located at Gdansk Bay rather then where it's suppose
 
 -----
 
-How to import TLE data from CELESTRAK:
-
-import orbitdb
-odb = orbitdb.OrbitDatabase()
-odb.refresh_urls()
-print(odb)
-odb.get_predictor("SURCAL 159") - search TLE info by name
-
-odb.get_name("NOAA 18")
-odb.get_norad(28654)
-
-
-How to propagate TLE and export to CZML
-import tle2czml
 
 
 
