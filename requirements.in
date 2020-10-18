@@ -4,7 +4,7 @@ requests
 sgp4
 orbit_predictor
 czml3
-tle-tools
+tle-tools==0.2.3
 
 # The following deps are needed for developers only
 pytest

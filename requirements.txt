@@ -44,7 +44,7 @@ secretstorage==3.1.2      # via keyring
 sgp4==2.4                 # via -r requirements.in, orbit-predictor
 six==1.14.0               # via astroquery, cryptography, cycler, html5lib, packaging, plotly, python-dateutil, retrying, w3lib
 soupsieve==2.0            # via beautifulsoup4
-tle-tools==0.2.1          # via -r requirements.in
+tle-tools==0.2.3          # via -r requirements.in
 toml==0.10.1              # via pytest
 urllib3==1.25.8           # via requests
 w3lib==1.21.0             # via czml3
