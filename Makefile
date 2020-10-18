@@ -13,7 +13,7 @@ setup:
 	# create virtualenv if needed
 	@if [ ! -d venv ]; then                                 \
 	    echo "STEP 2: Creating virtual environment (venv)"; \
-		python3 -m venv venv                                \
+		python3 -m venv venv;                               \
 	else                                                    \
 	    echo "STEP 2: venv already set up";                 \
 	fi
