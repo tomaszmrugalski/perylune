@@ -34,6 +34,13 @@ setup:
 	echo "STEPS 5: Installing dependencies"
 	venv/bin/pip install -r requirements.txt
 
+perylune-venv-install:
+	# Pretend to install perylune in the venv
+	cd venv/lib64/python3.8/site-packages && ln -s -f ../../../../perylune/
+
+perylune-venv-uninstall:
+	# Uninstalling perylune from the venv
+	rm -rf venv/lib64/python3.8/site-packages/perylune
 
 check:
 	PYTHONPATH=.:poliastro/src pytest -v --ignore=poliastro
