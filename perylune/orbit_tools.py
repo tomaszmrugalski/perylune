@@ -1,11 +1,11 @@
 from poliastro.twobody import Orbit
 from astropy import units as u
 import numpy as np
-from math import sqrt, sin, cos
+from math import sqrt, sin, cos, pi
 
 def print_orb(o: Orbit):
-    print(o)
-    #print("Semimajor axis (), eccentricity (e), inclination (i), RAAN (Ω) - right ascension of the ascending node, argument or perigeum (𝜔), nu (𝜈) - true anomaly")
+    """Prints orbit details."""
+    print(repr(o))
     a, e, i, raan, argp, nu = o.classical()
     if e<1:
         b = a*sqrt(1-e*e)
@@ -20,6 +20,8 @@ def print_orb(o: Orbit):
     surface = o.attractor.R
     apo_surface = apo - surface
     per_surface = per - surface
+    #print("Semimajor axis (𝑎), minor semi-axis (b), eccentricity (e), inclination (i), RAAN (Ω) - right ascension of the ascending node,
+    #       argument or perigeum (𝜔), nu (𝜈) - true anomaly")
     print("a(𝑎)=%4.2f%s, b=%4.2f%s, e=%4.2f%s, i=%4.2f%s raan(Ω)=%4.2f%s argp(𝜔)=%4.2f%s nu(𝜈)=%4.2f%s" % \
         (a.value, a.unit, b.value, b.unit, e.value, e.unit, i.value, i.unit, raan.value, raan.unit, argp.value, argp.unit, nu.value, nu.unit))
     print("period=%4.2f%s perapis=%4.0f%s(%4.2f%s) apoapsis=%4.0f%s(%4.2f%s)" % \
@@ -28,6 +30,8 @@ def print_orb(o: Orbit):
          apo.value, apo.unit, apo_surface.value, apo_surface.unit))
 
 def compare_orb(o1: Orbit, o2: Orbit):
+    """Compares two orbits"""
+    # TODO: Implement this
     print("They do look like orbits")
 
 
@@ -51,7 +55,6 @@ def inc_change(o1: Orbit, o2: Orbit):
     delta_v = 2*np.sin(di/2.0)*sqrt(1-e*e*np.cos(argp + nu)) * n * a / (1 + e*np.cos(nu))
 
     return delta_v
-
 
 def calc_vel(o: Orbit, delta_t: u, n: int):
     """
@@ -87,3 +90,26 @@ def calc_vel_inc_cost(o1: Orbit, o2: Orbit, delta_t: u, n: int):
         orb = orb.propagate(delta_t)
 
     return vel
+
+def normalize_2pi(a):
+    """Normalizes value to <0..2pi) range.
+       This works for float, u.deg and u.rad types. """
+    if (type(a) == u.quantity.Quantity):
+        if (a.unit == u.deg):
+            return np.mod(a, 360*u.deg)
+        if (a.unit == u.rad):
+            return np.mod(a, 2*pi*u.rad)
+    else:
+        # float
+        return a % (2*pi)
+
+def normalize_pipi(a):
+    """Normalizes value to <-pi...pi) range"""
+    if (type(a) == u.quantity.Quantity):
+        if (a.unit == u.deg):
+            return np.mod(a + 180*u.deg, 360*u.deg) - 180*u.deg
+        if (a.unit == u.rad):
+            return np.mod(a + pi*u.rad, 2*pi*u.rad) - pi*u.rad
+    else:
+        # float
+        return (a + pi) % (2*pi) - pi
