@@ -113,3 +113,47 @@ def normalize_pipi(a):
     else:
         # float
         return (a + pi) % (2*pi) - pi
+
+def propagate_to_periapsis(o: Orbit):
+    """ Propagate given orbit to its periapsis. """
+    if o.nu != 0 * u.deg:
+        o_f = o.propagate_to_anomaly(0 * u.deg)
+    return o_f
+
+
+def calculate_nodes_dist(o: Orbit):
+    """Calculates radial distance to ascending and decending nodes.
+       Returns an, dn, dan, ddn
+       an - ascending node (in radians from periapsis)
+       dn - descending node (in radians from periapsis)
+       dan - distance from current position to ascending node (in radians)
+       ddn - distance from current position to descending node (in radians)"""
+
+    nu = o.nu
+    argp = o.argp
+#    print("nu=%s" % nu)
+#    #print("argp=%s" % argp)
+    an = normalize_2pi(360 * u.deg - argp)
+    dn = normalize_2pi(an + 180*u.deg)
+
+    dist_to_an = normalize_2pi(an - nu)
+    dist_to_dn = normalize_2pi(dn - nu)
+
+    return an, dn, dist_to_an, dist_to_dn
+
+def propagate_to_asc_node(o: Orbit):
+    """ Propagates the orbit to the ascending node."""
+    _, _, dan, __ = calculate_nodes_dist(o)
+
+    print("Propagating to AN: %s" % dan)
+
+    o_f = o.propagate_to_anomaly(dan)
+    return o_f
+
+def propagate_to_desc_node(o: Orbit):
+    """ Propagates the orbit to the descending node."""
+    _, _, dan, __ = calculate_nodes_dist(o)
+
+    print("Propagating to AN: %s" % dan)
+    o_f = o.propagate_to_anomaly(dan)
+    return o_f
