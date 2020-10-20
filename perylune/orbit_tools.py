@@ -1,4 +1,5 @@
 from poliastro.twobody import Orbit
+from poliastro.maneuver import Maneuver
 from astropy import units as u
 import numpy as np
 from math import sqrt, sin, cos, pi
@@ -157,3 +158,25 @@ def propagate_to_desc_node(o: Orbit):
     print("Propagating to AN: %s" % dan)
     o_f = o.propagate_to_anomaly(dan)
     return o_f
+
+
+def prograde_maneuver(o: Orbit, dv, delay):
+    """ Generates maneuver in the prograde direction.
+        dv - expressed as dimensionless float (in m/s)
+        delay - delay expressed as u.s (in seconds) """
+
+    if delay is None:
+        delay = 0*u.s
+
+    # If the units used are km rather than m, then we need to shrink the dv value by 3 orders of magnitude
+    if o.v[0].unit == u.km / u.s:
+        dv /= 1000
+
+    # normalize v
+    len = np.linalg.norm(o.v)
+    vnorm = o.v / len.value
+    v = vnorm * dv
+
+    man = Maneuver((delay, v))
+
+    return man
