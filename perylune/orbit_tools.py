@@ -119,8 +119,8 @@ def propagate_to_periapsis(o: Orbit):
     """ Propagate given orbit to its periapsis. """
     if o.nu != 0 * u.deg:
         o_f = o.propagate_to_anomaly(0 * u.deg)
-    return o_f
-
+        return o_f
+    return o
 
 def calculate_nodes_dist(o: Orbit):
     """Calculates radial distance to ascending and decending nodes.
