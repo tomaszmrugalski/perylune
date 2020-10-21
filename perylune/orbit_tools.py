@@ -160,6 +160,11 @@ def propagate_to_desc_node(o: Orbit):
     return o_f
 
 
+# def sync_raan_inc(o1: Orbit, raan_f, inc_f):
+#     """ Generates a maneuver that will achieve specified RAAN and inclination.
+#         Based on Braeunig, http://www.braeunig.us/space/orbmech.htm#maneuver, see eq. 4.75 and the text above it. """
+
+
 def prograde_maneuver(o: Orbit, dv, delay):
     """ Generates maneuver in the prograde direction.
         dv - expressed as dimensionless float (in m/s)
@@ -177,6 +182,89 @@ def prograde_maneuver(o: Orbit, dv, delay):
     vnorm = o.v / len.value
     v = vnorm * dv
 
+    print(v)
+
     man = Maneuver((delay, v))
+
+    return man
+
+def plane_change_maneuver(o: Orbit, theta):
+    """ Generates inclination change maneuver. This changes the inclination by theta degress.
+        o - initial orbit
+        theta - expressed in plain float as degrees or as u.deg. This maneuver in general should be
+        performed at either ascending or descending node.
+
+        returns:
+        maneuver that can be applied on the initial orbit.
+
+        To perform this calculation, a local coords system is needed. (i,j,k) unit vectors are defined.
+        The coords system is oriented as follows:
+
+       j^ (normal vector)
+        |
+        |
+        |
+        +---------->    (velocity vector) ----------- orbital plane
+       k             i
+
+        (towards viewer = r vector, from Earth center to spacecraft)
+
+        In this coords system, the inclination change is done in i,j plane.
+
+                   _^
+              vf__/  \
+             __/      \ dv = vf - v
+          __/          \
+         /              \
+        +---------------->
+                v
+
+        First we need to calculate the expected final velocity (vf). The get the delta-v vector as
+        a difference of vf minus the original velocity.
+
+         """
+
+    # Let's assume the delay is not configurable and the maneuver always takes place immediately.
+    delay = 0*u.s
+
+    if type(theta) == float:
+        theta = theta * u.deg
+
+    # Get the v (current velocity) and r (distance from Earth center) as vectors and make both of them dimiensionless
+    # Also convert them to km first. We want to get rid of the units, because they complicate the cross product.
+    v = o.v.to(u.km / u.s) / u.km * u.s
+    r = o.r.to(u.km) / u.km
+
+    # This is a normal vector. It is perpendicular to the plane defined by r (connected Earth center with the object) and v (velocity)
+    # This has the right direction.
+    normal = np.cross(v,r)
+    # Now we need to calculate the right vectors magnitude
+    normal = normal / np.linalg.norm(normal).value
+
+    # Let's get 3 unit vectors and the r,v,n mangitudes (lenghts) expressed as floats
+    v_len = np.linalg.norm(v).value
+    n_len = np.linalg.norm(normal).value
+    r_len = np.linalg.norm(r).value
+
+    # get the unit vectors
+    i = v / v_len
+    j = normal / n_len
+    k = r / r_len
+
+    #print("i=%s" % i)
+    #print("j=%s" % j)
+    #print("k=%s" % k)
+
+    # final velocity after maneuver
+    vf = i * v_len * np.cos(theta) + j * v_len * np.sin(theta)
+
+    #print("vf=%s" % vf)
+
+    # The maneuver dv is a difference between original and final velocity
+    dv = vf - v
+    dv = dv * u.km / u.s
+
+    # Ok, turn this into maneuver and we're done!
+    man = Maneuver((delay, dv))
 
     return man
