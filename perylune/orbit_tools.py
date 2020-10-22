@@ -130,11 +130,11 @@ def calculate_nodes_dist(o: Orbit):
        dan - distance from current position to ascending node (in radians)
        ddn - distance from current position to descending node (in radians)"""
 
-    nu = o.nu
-    argp = o.argp
+    nu = o.nu.to(u.deg)
+    argp = o.argp.to(u.deg)
 #    print("nu=%s" % nu)
 #    #print("argp=%s" % argp)
-    an = normalize_2pi(360 * u.deg - argp)
+    an = normalize_2pi(- argp)
     dn = normalize_2pi(an + 180*u.deg)
 
     dist_to_an = normalize_2pi(an - nu)
@@ -144,19 +144,16 @@ def calculate_nodes_dist(o: Orbit):
 
 def propagate_to_asc_node(o: Orbit):
     """ Propagates the orbit to the ascending node."""
-    _, _, dan, __ = calculate_nodes_dist(o)
+    an, _, _, __ = calculate_nodes_dist(o)
 
-    print("Propagating to AN: %s" % dan)
-
-    o_f = o.propagate_to_anomaly(dan)
+    o_f = o.propagate_to_anomaly(an)
     return o_f
 
 def propagate_to_desc_node(o: Orbit):
     """ Propagates the orbit to the descending node."""
-    _, _, dan, __ = calculate_nodes_dist(o)
+    _, dn, _, _ = calculate_nodes_dist(o)
 
-    print("Propagating to AN: %s" % dan)
-    o_f = o.propagate_to_anomaly(dan)
+    o_f = o.propagate_to_anomaly(dn)
     return o_f
 
 

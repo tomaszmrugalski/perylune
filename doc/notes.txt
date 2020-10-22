@@ -1,4 +1,11 @@
+# Bibliography
 
+https://www.reddit.com/r/Kos/comments/5h509a/hoe_do_you_calculate_intersecting_points_of_two/
+
+
+
+Angry astronaut - Earth-Moon system delta-v map
+https://youtu.be/Lb3t1rvQ-60?t=712
 
 # Backend Ideas
 
@@ -9,6 +16,10 @@
 # UI Ideas
 
 - a knob that turns Earth rotation on and off
+
+
+- orbit editor (orbit + add realistic maneuvers)
+  - scenario: suborbital Perun launch. Task: make it to the orbit
 
 
 # Stuff to figure out
