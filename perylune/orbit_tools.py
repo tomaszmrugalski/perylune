@@ -179,8 +179,6 @@ def prograde_maneuver(o: Orbit, dv, delay):
     vnorm = o.v / len.value
     v = vnorm * dv
 
-    print(v)
-
     man = Maneuver((delay, v))
 
     return man
