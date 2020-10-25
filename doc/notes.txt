@@ -68,3 +68,15 @@ pip install jupyterlab
 pip install tle-tools
 
 jupyterlab
+
+POLIASTRO CONTRIB IDEAS:
+
+- doc update explaining how to tweak the charts
+  (see 02-rocketlab-to-noaa17.ipynb)
+  plot.plot(orb1, color="orange", label="GDASAT-1, after orbital insertion")
+  plot.plot(orb_target, color="red", label="NOAA-17, target sat")
+  plot._layout.width=1200
+  plot._layout.height=800
+
+  the _layout is not documented anywhere.
+  there is no description whatsoever how to alter the legend.

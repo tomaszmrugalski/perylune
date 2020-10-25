@@ -4,6 +4,12 @@ from astropy import units as u
 import numpy as np
 from math import sqrt, sin, cos, pi
 
+def load_tle(tle_text: str):
+    tle_lines = tle_text.strip().splitlines()
+    tle = TLE.from_lines(*tle_lines)
+    orb = tle.to_orbit()
+    return orb
+
 def print_orb(o: Orbit):
     """Prints orbit details."""
     print(repr(o))
@@ -230,8 +236,8 @@ def plane_change_maneuver(o: Orbit, theta):
     v = o.v.to(u.km / u.s) / u.km * u.s
     r = o.r.to(u.km) / u.km
 
-    # This is a normal vector. It is perpendicular to the plane defined by r (connected Earth center with the object) and v (velocity)
-    # This has the right direction.
+    # This is a normal vector. It is perpendicular to the plane defined by r (connected Earth center with the object) and
+    # v (velocity). This has the right direction.
     normal = np.cross(v,r)
     # Now we need to calculate the right vectors magnitude
     normal = normal / np.linalg.norm(normal).value
