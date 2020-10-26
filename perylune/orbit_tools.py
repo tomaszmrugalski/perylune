@@ -1,5 +1,6 @@
 from poliastro.twobody import Orbit
 from poliastro.maneuver import Maneuver
+from poliastro.util import norm
 from astropy import units as u
 import numpy as np
 from math import sqrt, sin, cos, pi
@@ -269,3 +270,10 @@ def plane_change_maneuver(o: Orbit, theta):
     man = Maneuver((delay, dv))
 
     return man
+
+def get_cost(man: Maneuver, index: int):
+    """ Returns the cost of specific Maneuver. Some maneuvers, such as hohmann, have 2 or even more burns.
+        Thes econd parameter specifies an index.
+        Returns a cost using units, e.g. 100 m/s"""
+    burn = man._dvs[index]
+    return norm(burn)
