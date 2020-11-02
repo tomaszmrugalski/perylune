@@ -2,6 +2,19 @@ import urllib.request
 import os.path
 from math import sqrt
 
+import plotly.graph_objs as go
+
+from astropy import units as u
+
+from astropy.time import Time, TimeDelta
+
+from poliastro.plotting.static import StaticOrbitPlotter
+from poliastro.util import time_range
+
+from astropy.coordinates import solar_system_ephemeris
+from poliastro.bodies import Earth, Mars, Sun, Moon
+from poliastro.ephem import Ephem
+
 def get_ephem(name, start_time, stop_time):
 
 
@@ -72,17 +85,17 @@ def process_ephem(txt):
             continue
         if l == "$$SOE":
             found = True
-            print("Found data start in line %d" % cnt)
+            #print("Found data start in line %d" % cnt)
             continue
 
         if found and l == "$$EOE":
             found = False
-            print("Found end of data in line %d" % cnt)
+            #print("Found end of data in line %d" % cnt)
             continue
         
         data.append(l)
 
-    print("Parsed %d lines of data" % len(data))
+    print("Found %d lines of data" % len(data))
 
     # JDTDB, Calendar Date (TDB), X, Y, Z, VX, VY, VZ, LT, RG, RR,
     ephem = []
@@ -100,9 +113,68 @@ def process_ephem(txt):
 
 def print_data(pos):
     for l in pos:
-        print("Distance at %s: %f km" % (l[1], l[5]))
+        print("Distance at %s: %4.0f km" % (l[1], l[5]))
 
-txt = get_ephem("1998%20OR2", "2020-04-20", '2020-05-10')
-pos = process_ephem(txt)
-print_data(pos)
+def extract_data(pos):
+
+    dates = []
+    dist = []
+
+    for l in pos:
+        dates.append(l[1][10:16])
+        dist.append(l[5])
+
+    return dates, dist
+
+
+def dist_plot(dates, dist, title):
+    """ 
+    Generates distance plot. 
+    
+    dates - array of x values
+    dist - array of y values
+    title - string with the chart title
+    
+    returns plotly figure (call .show() on it to display)
+    """
+
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x = dates, y = dist, mode="markers", name="Delta-v [km/s]"))
+
+    fig.update_layout(legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1), 
+                      xaxis_title="date", yaxis_title="Distance [km]", title=title,
+                      margin=dict(l=20, r=20, t=40, b=20))
+
+    return fig
+
+def dist_chart(asteroid, date, timespan):
+    solar_system_ephemeris.set('jpl')
+
+    EPOCH = Time(date, scale="tdb")
+
+    epochs = time_range(
+        EPOCH - TimeDelta(timespan), end=EPOCH + TimeDelta(timespan)
+    )
+
+    epochs_moon = time_range(
+        EPOCH - TimeDelta(15 * u.day), end=EPOCH + TimeDelta(15 * u.day)
+    )
+
+    moon = Ephem.from_body(Moon, epochs_moon, attractor=Earth)
+    aster = Ephem.from_horizons(asteroid, epochs, attractor=Earth)
+
+    plotter = StaticOrbitPlotter()
+    plotter.set_attractor(Earth)
+    plotter.set_body_frame(Moon)
+    plotter.plot_ephem(moon, EPOCH, label=Moon);
+    plotter.plot_ephem(aster, EPOCH, label=asteroid);
+
+    return plotter
+    
+
+if __name__ == '__main__':
+# Example usage:
+    txt = get_ephem("1998%20OR2", "2020-04-20", '2020-05-10')
+    pos = process_ephem(txt)
+    print_data(pos)
 
