@@ -92,7 +92,7 @@ def process_ephem(txt):
             found = False
             #print("Found end of data in line %d" % cnt)
             continue
-        
+
         data.append(l)
 
     print("Found %d lines of data" % len(data))
@@ -130,11 +130,11 @@ def extract_data(pos):
 def dist_plot(dates, dist, title):
     """ 
     Generates distance plot. 
-    
+
     dates - array of x values
     dist - array of y values
     title - string with the chart title
-    
+
     returns plotly figure (call .show() on it to display)
     """
 
@@ -170,7 +170,6 @@ def dist_chart(asteroid, date, timespan):
     plotter.plot_ephem(aster, EPOCH, label=asteroid);
 
     return plotter
-    
 
 if __name__ == '__main__':
 # Example usage:
