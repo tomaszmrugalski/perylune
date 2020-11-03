@@ -277,3 +277,26 @@ def get_cost(man: Maneuver, index: int):
         Returns a cost using units, e.g. 100 m/s"""
     burn = man._dvs[index]
     return norm(burn)
+
+def apses_to_ae(apo, per, radius = None):
+    """ Convert apoapsis and periapsis altitudes (expressed in altitudes or absolute values, e.g. 300x800km) to semi-major axis (a)
+        and eccentricity (e). If radius is specified, the apo and per are altitudes, if not specified, apo and per are absolute
+        values """
+
+    # sanity checks
+    if apo < per:
+        apo, per = per, apo
+
+    # If radius is specified, the apo and per are expressed as altitudes (distance to surface, not to Earth center)
+    if radius:
+        apo += radius
+        per += radius
+
+    if (apo == per):
+        return apo, 0 # circular orbit, zero eccentricity
+
+    e = (apo - per) / (per + apo)
+
+    a = apo / (1+e)
+
+    return a,e
