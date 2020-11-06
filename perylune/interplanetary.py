@@ -19,25 +19,18 @@ def calc_delta_v(body1, body2):
 def escape_delta_v(orb, inc_correction):
     # orb - departing orbit
     # inc_correction - boolean defining whether the inclination correction should be taken into consideration or not
-    # Returns 3 escape velocities: x_cur (for current orbital position), x_per (escape velocity at periapsis) and x_apo (escape
+    # Returns 3 escape velocities (scalars): x_cur (for current orbital position), x_per (escape velocity at periapsis) and x_apo (escape
     # velocity at apoapsis)
-    planet = orb.attractor
 
-    GM = G * planet.mass
-    if (planet.name == "Earth"):
-        GM = GM_earth
-
-
-    orb_per = orb.propagate_to_anomaly(0*u.deg)
-    orb_apo = orb.propagate_to_anomaly(180*u.deg)
+    GM = orb.attractor.k # this is GM_something
 
     r_cur = np.linalg.norm(orb.r).to(u.m)
-    r_per = np.linalg.norm(orb_per.r).to(u.m)
-    r_apo = np.linalg.norm(orb_apo.r).to(u.m)
+    r_per = orb.r_p.to(u.m)
+    r_apo = orb.r_a.to(u.m)
 
-    x_cur = np.sqrt(2*GM/(r_cur)) - np.linalg.norm(orb.v) # current orbital position
-    x_per = np.sqrt(2*GM/(r_per)) - np.linalg.norm(orb_per.v) # current orbital position
-    x_apo = np.sqrt(2*GM/(r_apo)) - np.linalg.norm(orb_apo.v) # current orbital position
+    x_cur = np.sqrt(2*GM/(r_cur))
+    x_per = np.sqrt(2*GM/(r_per))
+    x_apo = np.sqrt(2*GM/(r_apo))
 
     return x_cur, x_per, x_apo
 
@@ -95,6 +88,11 @@ def heliocentric_velocity(orbit):
     return v
 
 def hohmann_velocity(orbit1, orbit2):
+    """ Calculates Hohmann parameters from orbit1 to orbit2. Assumes the orbits are co-planar.
+        Returns:
+        v1 - heliocentric velocity at departure on Hohmann trajectory (after burn)
+        v2 - heliocentric velocity at arrival on Hohmann trajectory (before burn)
+        tof - time of flight (in days) """
 
     r1 = orbit1.a.to(u.m)
     r2 = orbit2.a.to(u.m)
@@ -106,14 +104,20 @@ def hohmann_velocity(orbit1, orbit2):
 
     tof = np.pi * np.sqrt( ((r1+r2)**3) / (8*GM_sun)) . to(u.day)
 
-    print("v1=%s" % v1)
-    print("v2=%s" % v2)
-    print("tof=%s" % tof)
     return v1, v2, tof
 
 def transfer_delta_v(body1, body2, attractor):
     """Returns transfer parameters for body1 (e.g. Earth) to body2 (e.g. Mars).
-       Optionally, the main attractor can be specified. If omitted, Sun is assumed."""
+       Optionally, the main attractor can be specified. If omitted, Sun is assumed.
+
+       Returns:
+       helio1 - heliocentric velocity at departure (before Hohmann) (body1)
+       vsc1 - escape velocity at body1
+       helio2 - heliocentric velocity at arrival (body2)
+       vesc2 - escape velocity at body2
+       v1 - heliocentric velocity at departure (after Hohmann burn)
+       v2 - heliocentric velocity at arrival (before Hohmann burn)
+       tof - time of flight (in days) """
 
     # How to obtain the 
     method = "horizons_orbit" # allowed values are ephem, horizons_orbit
