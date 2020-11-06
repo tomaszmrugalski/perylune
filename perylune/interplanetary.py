@@ -1,10 +1,15 @@
 from astropy import units as u
+from astropy import time
+
 from perylune.constants import *
-from poliastro.constants import GM_earth
+from perylune.horizons import name_to_horizons_id
+
+from poliastro.constants import GM_earth, GM_sun
 from poliastro.bodies import Earth, Sun
 from poliastro.ephem import Ephem
 from poliastro.twobody import Orbit
 from poliastro.util import time_range
+from poliastro.frames import Planes
 import plotly.graph_objs as go
 import numpy as np
 
@@ -71,3 +76,81 @@ def distance_chart(body1, body2, date_start, interval, steps):
                     xaxis_title="date", yaxis_title="Distance [km]", title=name,
                     margin=dict(l=20, r=20, t=40, b=20))
     return fig
+
+
+def heliocentric_velocity(orbit):
+    """ Calculates heliocentric velocity for a given orbit """
+
+    if orbit.attractor != Sun:
+        gm = G * orbit.attractor.mass
+    else:
+        gm = GM_sun
+
+    # We could use the current distance (orbit.r), periapsis or apoapsis (orbit.r_a or orbit.r_p),
+    # but we'll simply go with a = (r_a + r_p) / 2
+    a = orbit.a.to(u.m)
+
+    v = np.sqrt(gm*(1.0/a))
+
+    return v
+
+def hohmann_velocity(orbit1, orbit2):
+
+    r1 = orbit1.a.to(u.m)
+    r2 = orbit2.a.to(u.m)
+
+    E0 = GM_sun / (r1 + r2)
+
+    v1 = np.sqrt(2*(GM_sun/r1 - E0))
+    v2 = np.sqrt(2*(GM_sun/r2 - E0))
+
+    tof = np.pi * np.sqrt( ((r1+r2)**3) / (8*GM_sun)) . to(u.day)
+
+    print("v1=%s" % v1)
+    print("v2=%s" % v2)
+    print("tof=%s" % tof)
+    return v1, v2, tof
+
+def transfer_delta_v(body1, body2, attractor):
+    """Returns transfer parameters for body1 (e.g. Earth) to body2 (e.g. Mars).
+       Optionally, the main attractor can be specified. If omitted, Sun is assumed."""
+
+    # How to obtain the 
+    method = "horizons_orbit" # allowed values are ephem, horizons_orbit
+
+    if attractor is None:
+        attractor = Sun
+
+    # Let's assume the calculations are done for 2020.
+    date_start = time.Time("2020-01-01 00:00", scale="utc").tdb
+    date_end =   time.Time("2021-12-31 23:59", scale="utc").tdb
+
+    name1, id_type1 = name_to_horizons_id(body1)
+    name2, id_type2 = name_to_horizons_id(body2)
+
+    if method == "ephem":
+        # Get the ephemerides first and then contruct orbit based on them. This is the recommended
+        # way. See warning in Orbit.from_horizons about deprecation.
+        ephem1 = Ephem.from_horizons(name=name1, epochs=time_range(date_start, end=date_end), plane=Planes.EARTH_ECLIPTIC, id_type=id_type1)
+        ephem2 = Ephem.from_horizons(name=name2, epochs=time_range(date_start, end=date_end), plane=Planes.EARTH_ECLIPTIC, id_type=id_type2)
+
+        # Solve for departure and target orbits
+        orb1 = Orbit.from_ephem(Sun, ephem1, date_start + 180 * u.day)
+        orb2 = Orbit.from_ephem(Sun, ephem2, date_end)
+    elif method == "horizons_orbit":
+        # This is the old way. Sadly, it produces way better values.
+        orb1 = Orbit.from_horizons(name=name1, attractor=attractor, plane=Planes.EARTH_ECLIPTIC, id_type=id_type1)
+        orb2 = Orbit.from_horizons(name=name2, attractor=attractor, plane=Planes.EARTH_ECLIPTIC, id_type=id_type2)
+    else:
+        raise "Invalid method set."
+
+    # The escape_delta_v returns a tuple of escape velocity at current, periapsis, apoapsis.
+    helio1 = heliocentric_velocity(orb1)
+    helio2 = heliocentric_velocity(orb2)
+
+    vesc1 = escape_delta_v(orb1, False)[1]
+    vesc2 = escape_delta_v(orb2, False)[1]
+
+    hoh1, hoh2, tof = hohmann_velocity(orb1, orb2)
+
+    return helio1, vesc1, helio2, vesc2, hoh1, hoh2, tof

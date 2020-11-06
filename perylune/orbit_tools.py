@@ -30,12 +30,23 @@ def print_orb(o: Orbit):
     per_surface = per - surface
     #print("Semimajor axis (𝑎), minor semi-axis (b), eccentricity (e), inclination (i), RAAN (Ω) - right ascension of the ascending node,
     #       argument or perigeum (𝜔), nu (𝜈) - true anomaly")
-    print("a(𝑎)=%4.2f%s, b=%4.2f%s, e=%4.2f%s, i=%4.2f%s raan(Ω)=%4.2f%s argp(𝜔)=%4.2f%s nu(𝜈)=%4.2f%s" % \
-        (a.value, a.unit, b.value, b.unit, e.value, e.unit, i.value, i.unit, raan.value, raan.unit, argp.value, argp.unit, nu.value, nu.unit))
-    print("period=%4.2f%s perapis=%4.0f%s(%4.2f%s) apoapsis=%4.0f%s(%4.2f%s)" % \
-        (o.period.value, o.period.unit, \
-         per.value, per.unit, per_surface.value, per_surface.unit, \
-         apo.value, apo.unit, apo_surface.value, apo_surface.unit))
+
+    if a > 10e7 * u.km or b > 10e7 * u.km or apo > 10e7 * u.km or per > 10e7 * u.km:
+        a = a.to(u.au)
+        b = b.to(u.au)
+        apo = apo.to(u.au)
+        per = per.to(u.au)
+        print("a(𝑎)=%4.4f%s, b=%4.4f%s, e=%4.2f%s, i=%4.2f%s raan(Ω)=%4.2f%s argp(𝜔)=%4.2f%s nu(𝜈)=%4.2f%s" % \
+            (a.value, a.unit, b.value, b.unit, e.value, e.unit, i.value, i.unit, raan.value, raan.unit, argp.value, argp.unit, nu.value, nu.unit))
+        print("period=%4.2f%s perapis=%4.4f%s apoapsis=%4.4f%s" % \
+            (o.period.value, o.period.unit, per.value, per.unit, apo.value, apo.unit))
+    else:
+        print("a(𝑎)=%4.4f%s, b=%4.4f%s, e=%4.2f%s, i=%4.2f%s raan(Ω)=%4.2f%s argp(𝜔)=%4.2f%s nu(𝜈)=%4.2f%s" % \
+            (a.value, a.unit, b.value, b.unit, e.value, e.unit, i.value, i.unit, raan.value, raan.unit, argp.value, argp.unit, nu.value, nu.unit))
+        print("period=%4.2f%s perapis=%4.4f%s(%4.2f%s) apoapsis=%4.4f%s(%4.2f%s)" % \
+            (o.period.value, o.period.unit, \
+            per.value, per.unit, per_surface.value, per_surface.unit, \
+            apo.value, apo.unit, apo_surface.value, apo_surface.unit))
 
 def compare_orb(o1: Orbit, o2: Orbit):
     """Compares two orbits"""

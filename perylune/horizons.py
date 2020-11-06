@@ -171,9 +171,29 @@ def dist_chart(asteroid, date, timespan):
 
     return plotter
 
+
+def name_to_horizons_id(name: str):
+
+    bodies_dict = {
+        "sun": 10,
+        "mercury": 199,
+        "venus": 299,
+        "earth": 399,
+        "mars": 499,
+        "jupiter": 599,
+        "saturn": 699,
+        "uranus": 799,
+        "neptune": 899,
+    }
+
+    if bodies_dict[name]:
+        return str(bodies_dict[name]), "majorbody"
+    return name, "smallbody"
+
 if __name__ == '__main__':
 # Example usage:
     txt = get_ephem("1998%20OR2", "2020-04-20", '2020-05-10')
     pos = process_ephem(txt)
     print_data(pos)
+
 
