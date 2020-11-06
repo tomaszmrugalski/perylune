@@ -186,7 +186,7 @@ def name_to_horizons_id(name: str):
         "neptune": 899,
     }
 
-    if bodies_dict[name]:
+    if name in bodies_dict:
         return str(bodies_dict[name]), "majorbody"
     return name, "smallbody"
 

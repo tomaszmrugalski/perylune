@@ -16,7 +16,7 @@ import numpy as np
 def calc_delta_v(body1, body2):
     return 9999 * u.km/u.s
 
-def escape_delta_v(orb, inc_correction):
+def escape_vel(orb, inc_correction):
     # orb - departing orbit
     # inc_correction - boolean defining whether the inclination correction should be taken into consideration or not
     # Returns 3 escape velocities (scalars): x_cur (for current orbital position), x_per (escape velocity at periapsis) and x_apo (escape
@@ -152,8 +152,8 @@ def transfer_delta_v(body1, body2, attractor):
     helio1 = heliocentric_velocity(orb1)
     helio2 = heliocentric_velocity(orb2)
 
-    vesc1 = escape_delta_v(orb1, False)[1]
-    vesc2 = escape_delta_v(orb2, False)[1]
+    vesc1 = escape_vel(orb1, False)[1]
+    vesc2 = escape_vel(orb2, False)[1]
 
     hoh1, hoh2, tof = hohmann_velocity(orb1, orb2)
 
