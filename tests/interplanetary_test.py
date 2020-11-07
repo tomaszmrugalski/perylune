@@ -42,7 +42,7 @@ def test_transfer_vel():
 
     expected = [
         # Reference: BMW 2nd ed, table 8-4, example on page 305
-        ["earth", "mars", 29.79, 24.13, 32.73, 21.48, 258.83 ]
+        ["earth", "mars", 29.79, 24.13, 32.73, 21.48, 258.84 ]
     ]
 
     for case in expected:
