@@ -22,6 +22,8 @@ def escape_vel(orb, inc_correction):
     # Returns 3 escape velocities (scalars): x_cur (for current orbital position), x_per (escape velocity at periapsis) and x_apo (escape
     # velocity at apoapsis)
 
+    # TODO: take inclination correction into consideration
+
     GM = orb.attractor.k # this is GM_something
 
     r_cur = np.linalg.norm(orb.r).to(u.m)
@@ -33,6 +35,18 @@ def escape_vel(orb, inc_correction):
     x_apo = np.sqrt(2*GM/(r_apo))
 
     return x_cur, x_per, x_apo
+
+def escape_delta_v(orb):
+    v_cur, v_per, v_apo = escape_vel(orb, False)
+
+    # TODO: can we really just subtract one from another? Shouldn't this be a geometric subtraction?
+    dv_cur = v_cur - np.linalg.norm(orb.v)
+    orb = orb.propagate_to_anomaly(0*u.deg)
+    dv_per = v_per - np.linalg.norm(orb.v)
+    orb = orb.propagate_to_anomaly(180*u.deg)
+    dv_apo = v_apo - np.linalg.norm(orb.v)
+
+    return dv_cur, dv_per, dv_apo
 
 def distance_chart(body1, body2, date_start, interval, steps):
     """Generates a distance chart between body1 (e.g. Earth) and body2 (e.g. Mars)
