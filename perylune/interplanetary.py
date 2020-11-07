@@ -106,15 +106,13 @@ def hohmann_velocity(orbit1, orbit2):
 
     return v1, v2, tof
 
-def transfer_delta_v(body1, body2, attractor):
+def transfer_vel(body1, body2, attractor):
     """Returns transfer parameters for body1 (e.g. Earth) to body2 (e.g. Mars).
        Optionally, the main attractor can be specified. If omitted, Sun is assumed.
 
        Returns:
        helio1 - heliocentric velocity at departure (before Hohmann) (body1)
-       vsc1 - escape velocity at body1
        helio2 - heliocentric velocity at arrival (body2)
-       vesc2 - escape velocity at body2
        v1 - heliocentric velocity at departure (after Hohmann burn)
        v2 - heliocentric velocity at arrival (before Hohmann burn)
        tof - time of flight (in days) """
@@ -152,9 +150,43 @@ def transfer_delta_v(body1, body2, attractor):
     helio1 = heliocentric_velocity(orb1)
     helio2 = heliocentric_velocity(orb2)
 
-    vesc1 = escape_vel(orb1, False)[1]
-    vesc2 = escape_vel(orb2, False)[1]
+    #vesc1 = escape_vel(orb1, False)[1]
+    #vesc2 = escape_vel(orb2, False)[1]
 
     hoh1, hoh2, tof = hohmann_velocity(orb1, orb2)
 
-    return helio1, vesc1, helio2, vesc2, hoh1, hoh2, tof
+    return helio1, helio2, hoh1, hoh2, tof
+
+def transfer_vel_header():
+    txt = "# all values in km/s, except noted otherwise\n"
+    txt += "#departure, arrival, heliocentric vel @ departure, heliocentric vel @ arrival, hohmann dep burn, hohmann arrival burn, time of flight [days], time of flight [years], Hohman1 delta-v, Hohmann2 delta-v"
+    return txt
+
+def transfer_vel_format(name1, name2, x, sep):
+    """Used to pretty print output of transfer_vel_format.
+    name1 - string defining departing body
+    name2 - string defining target body
+    x - tuple of 5 values returned by transfer_delta_v
+    sep - optional separator. If not specified, comma (,) will be used.
+    
+    returns a string with formatted values"""
+
+    # Set the output data separator.
+    if sep is None:
+        sep = ','
+    
+    # Expand the input data and convert it all to km/s
+    helio1, helio2, hoh1, hoh2, tof = x
+    helio1 = helio1.to(u.km/u.s)
+    helio2 = helio2.to(u.km/u.s)
+    hoh1   = hoh1.to(u.km/u.s)
+    hoh2   = hoh2.to(u.km/u.s)
+
+    # transfer_delta_v really returns the 
+    burn1 = np.abs(helio1 - hoh1)
+    burn2 = np.abs(helio2 - hoh2)
+
+    txt = "%s, %s, %4.2f, %4.2f, %4.2f, %4.2f, %4.2f, %4.3f, %4.3f, %4.3f" % (name1, name2, helio1.value,  \
+        helio2.value, hoh1.value, hoh2.value, tof.value, tof.to(u.year).value, burn1.value, burn2.value )
+    txt = txt.replace(",", sep)
+    return (txt)

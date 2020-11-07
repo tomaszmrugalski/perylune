@@ -33,3 +33,26 @@ def test_escape_velocity():
     print_orb(o3)
     v,vp,va = interplanetary.escape_vel(o3, False)
     print(v, vp, va)
+
+def close_enough(a, b, epsilon):
+    assert np.abs(a - b) <= epsilon
+
+def test_transfer_vel():
+    """Tests if interplanetary Hohmann transfers are calculated properly."""
+
+    expected = [
+        # Reference: BMW 2nd ed, table 8-4, example on page 305
+        ["earth", "mars", 29.79, 24.13, 32.73, 21.48, 258.83 ]
+    ]
+
+    for case in expected:
+        v = interplanetary.transfer_vel(case[0], case[1], None)
+
+        print(len(v))
+        print(len(case))
+
+        close_enough(v[0].to(u.km/u.s).value, case[2], 0.01)
+        close_enough(v[1].to(u.km/u.s).value, case[3], 0.01)
+        close_enough(v[2].to(u.km/u.s).value, case[4], 0.01)
+        close_enough(v[3].to(u.km/u.s).value, case[5], 0.01)
+        close_enough(v[4].value, case[6], 0.01)
