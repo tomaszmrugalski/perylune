@@ -51,8 +51,8 @@ def test_transfer_vel():
         print(len(v))
         print(len(case))
 
-        close_enough(v[0].to(u.km/u.s).value, case[2], 0.01)
-        close_enough(v[1].to(u.km/u.s).value, case[3], 0.01)
-        close_enough(v[2].to(u.km/u.s).value, case[4], 0.01)
-        close_enough(v[3].to(u.km/u.s).value, case[5], 0.01)
-        close_enough(v[4].value, case[6], 0.01)
+        close_enough(v[0].to(u.km/u.s).value, case[2], 0.02)
+        close_enough(v[1].to(u.km/u.s).value, case[3], 0.02)
+        close_enough(v[2].to(u.km/u.s).value, case[4], 0.02)
+        close_enough(v[3].to(u.km/u.s).value, case[5], 0.02)
+        close_enough(v[4].value, case[6], 0.1)
