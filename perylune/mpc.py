@@ -63,7 +63,7 @@ def parse_line(l):
     #print("Parsed: name[%s] epoch=[%s] mean_anomaly=[%s] argp=[%s] raan=[%s] inc=[%s] ecc=[%s] mean_motion=[%s] a=[%s] flags=[%s] epoch=%s" %
     #(name, epoch, mean_anomaly, argp, raan, inc, ecc, mean_motion, a, flags, epoch))
 
-    return name, epoch, mean_anomaly, argp, raan, inc, ecc, mean_motion, a, flags, epoch
+    return name, epoch, mean_anomaly, argp, raan, inc, ecc, mean_motion, a, flags
 
 def parse_txt_orbits(fname, limit):
     """Parses NEA.txt orbits and returns an array of orbits generated.
@@ -74,7 +74,7 @@ def parse_txt_orbits(fname, limit):
     orbs = []
 
     for e in elements:
-        name, epoch, mean_anomaly, argp, raan, inc, ecc, mean_motion, a, flags, epoch = e
+        name, epoch, mean_anomaly, argp, raan, inc, ecc, mean_motion, a, flags = e
 
         o = Orbit.from_classical(Sun, a, ecc, inc, raan, argp, mean_anomaly, epoch, plane=Planes.EARTH_ECLIPTIC)
         orbs.append(o)
@@ -118,12 +118,13 @@ def parse_txt(fname, limit, skip):
             if l.find(skip) == -1:
                 continue
             else:
-                print("Found line [%s]" % l)
+                # print("Found line [%s]" % l)
                 found = True
                 continue
 
         if len(l) < 167:
             print("WARNING: Skipped line %d: too short (%d, expected at least 167 chars)" % (cnt, len(l)))
+            continue
 
         try:
             el = parse_line(l)

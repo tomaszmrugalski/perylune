@@ -79,7 +79,7 @@ def distance_chart(body1, body2, date_start, interval, steps):
 
     name = body1.name + "-" + body2.name + " distance"
 
-    fig.update_layout(legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1), 
+    fig.update_layout(legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
                     xaxis_title="date", yaxis_title="Distance [km]", title=name,
                     margin=dict(l=20, r=20, t=40, b=20))
     return fig
@@ -111,6 +111,15 @@ def hohmann_velocity(orbit1, orbit2):
     r1 = orbit1.a.to(u.m)
     r2 = orbit2.a.to(u.m)
 
+    return hohmann_velocity_from_a(r1, r2)
+
+def hohmann_velocity_from_a(r1, r2):
+    """ r1, r2 - departing orbit radius, target orbit radius.
+        Returns:
+        v1 - heliocentric velocity at departure on Hohmann trajectory (after burn)
+        v2 - heliocentric velocity at arrival on Hohmann trajectory (before burn)
+        tof - time of flight (in days) """
+
     E0 = GM_sun / (r1 + r2)
 
     v1 = np.sqrt(2*(GM_sun/r1 - E0))
@@ -131,7 +140,7 @@ def transfer_vel(body1, body2, attractor):
        v2 - heliocentric velocity at arrival (before Hohmann burn)
        tof - time of flight (in days) """
 
-    # How to obtain the 
+    # How to obtain the
     method = "horizons_orbit" # allowed values are ephem, horizons_orbit
 
     if attractor is None:
@@ -182,13 +191,13 @@ def transfer_vel_format(name1, name2, x, sep):
     name2 - string defining target body
     x - tuple of 5 values returned by transfer_delta_v
     sep - optional separator. If not specified, comma (,) will be used.
-    
+
     returns a string with formatted values"""
 
     # Set the output data separator.
     if sep is None:
         sep = ','
-    
+
     # Expand the input data and convert it all to km/s
     helio1, helio2, hoh1, hoh2, tof = x
     helio1 = helio1.to(u.km/u.s)
@@ -196,7 +205,7 @@ def transfer_vel_format(name1, name2, x, sep):
     hoh1   = hoh1.to(u.km/u.s)
     hoh2   = hoh2.to(u.km/u.s)
 
-    # transfer_delta_v really returns the 
+    # transfer_delta_v really returns the
     burn1 = np.abs(helio1 - hoh1)
     burn2 = np.abs(helio2 - hoh2)
 
@@ -204,3 +213,37 @@ def transfer_vel_format(name1, name2, x, sep):
         helio2.value, hoh1.value, hoh2.value, tof.value, tof.to(u.year).value, burn1.value, burn2.value )
     txt = txt.replace(",", sep)
     return (txt)
+
+def calc_min_delta_v(departure, target):
+    """ Calculates delta-v necessary to reach a target from the departure.
+    departure - semi major axis of the departure orbit (a)
+    target - a tuple with (name, epoch, mean_anomaly, argp, raan, inc, ecc, mean_motion, a, flags)
+    Returns: delta-v necessary to reach the target """
+
+    name, epoch, mean_anomaly, argp, raan, inc, ecc, mean_motion, a, flags = target
+
+    r1 = departure.to(u.m)
+    r2 = a.to(u.m)
+
+    # Let's calculate Hohmann velocities
+    v1, v2, tof = hohmann_velocity_from_a(r1, r2)
+
+    v1_dep = np.sqrt(GM_sun * 1.0/r1)
+    v2_arr = np.sqrt(GM_sun * 1.0/r2)
+
+    # Now we need to adjust for the inclination change. The angle between v1 (heliocentric velocity)
+    # and the v1_dep (expected Hohmann departure velocity) is inc degrees.
+
+    # v1 - v1
+    # v2 - v1_dep
+
+    # The delta-v for departure burn also has to account for the inclination change
+    dv1 = np.sqrt(v1**2 + v1_dep**2 - 2*v1*v1_dep*np.cos(inc))
+
+    # The plain calculation is simpler (but it requires departure and arrival to be coplanar)
+    # dv1_plain = abs(v1_dep - v1)
+    dv2 = abs(v2_arr - v2)
+
+    tof = np.pi * np.sqrt( ((r1+r2)**3) / (8*GM_sun)) . to(u.day)
+
+    return dv1, dv2, dv1 + dv2, tof
