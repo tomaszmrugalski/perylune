@@ -55,4 +55,4 @@ def test_transfer_vel():
         close_enough(v[1].to(u.km/u.s).value, case[3], 0.02)
         close_enough(v[2].to(u.km/u.s).value, case[4], 0.02)
         close_enough(v[3].to(u.km/u.s).value, case[5], 0.02)
-        close_enough(v[4].value, case[6], 0.1)
+        close_enough(v[4].value, case[6], 1) # check the orbital period

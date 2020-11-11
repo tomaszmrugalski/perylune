@@ -18,6 +18,8 @@ def download():
     raise "Not implemented"
 
 def parse_epoch(e):
+    if len(e) < 5:
+        return Time("J2000")
     century = (ord(e[0])- ord('I') + 18) * 100 # I = 18, J = 19, K = 20, etc.
     year = (ord(e[1]) - ord('0')) * 10 + (ord(e[2]) - ord('0'))
 
@@ -58,30 +60,24 @@ def parse_line(l):
     mean_motion = float(mean_motion)
     a = float(a) * u.au
 
-    print("Parsed: name[%s] epoch=[%s] mean_anomaly=[%s] argp=[%s] raan=[%s] inc=[%s] ecc=[%s] mean_motion=[%s] a=[%s] flags=[%s] epoch=%s" %
-    (name, epoch, mean_anomaly, argp, raan, inc, ecc, mean_motion, a, flags, epoch))
+    #print("Parsed: name[%s] epoch=[%s] mean_anomaly=[%s] argp=[%s] raan=[%s] inc=[%s] ecc=[%s] mean_motion=[%s] a=[%s] flags=[%s] epoch=%s" %
+    #(name, epoch, mean_anomaly, argp, raan, inc, ecc, mean_motion, a, flags, epoch))
 
-    o = Orbit.from_classical(Sun, a, ecc, inc, raan, argp, mean_anomaly, epoch, plane=Planes.EARTH_ECLIPTIC)
-    orbit_tools.print_orb(o)
+    return name, epoch, mean_anomaly, argp, raan, inc, ecc, mean_motion, a, flags, epoch
 
-    return 0
+def parse_txt_orbits(fname, limit):
+    """Parses NEA.txt orbits and returns an array of orbits generated.
+        fname - filename of the txt file in MPC format.
+        limit - number of lines to process (0 or None = process all)"""
 
-def parse_nea(limit):
-    if limit is None:
-        limit = 0
-
-
-    f = open("NEA.txt", 'r')
-    lines = f.readlines()
-    f.close()
-
-    print("Read %d line(s) from NEA.txt, parsing up to %d line(s)" % (len(lines), limit))
-
+    elements = parse_txt(fname, limit)
     orbs = []
 
-    for l in lines:
-        print("parsing: %s" % l)
-        orbs.append(parse_line(l))
+    for e in elements:
+        name, epoch, mean_anomaly, argp, raan, inc, ecc, mean_motion, a, flags, epoch = e
+
+        o = Orbit.from_classical(Sun, a, ecc, inc, raan, argp, mean_anomaly, epoch, plane=Planes.EARTH_ECLIPTIC)
+        orbs.append(o)
 
         if limit > 0:
             limit -= 1
@@ -91,8 +87,61 @@ def parse_nea(limit):
 
     return orbs
 
+def parse_txt(fname, limit, skip):
+    """Parses NEA.txt orbits and returns an array of parameters.
+        Each tuple contains the following parameters: name, epoch, mean_anomaly, argp, raan, inc, ecc, mean_motion, a, flags, epoch
+        fname - filename of the txt file in MPC format.
+        limit - number of lines to process (0 or None = process all)
+        skip - optional string. If specified ignore initial lines until specific pattern is found. The line with the pattern
+               is ignored and the next one starts the data.
+
+        """
+
+    if limit is None:
+        limit = 0
+
+    f = open(fname, 'r')
+    lines = f.readlines()
+    f.close()
+
+    print("Read %d line(s) from NEA.txt, parsing up to %d line(s)" % (len(lines), limit))
+
+    elements = []
+    if (skip is None):
+        found = True
+    else:
+        found = False
+
+    cnt = 1
+    for l in lines:
+        if not found:
+            if l.find(skip) == -1:
+                continue
+            else:
+                print("Found line [%s]" % l)
+                found = True
+                continue
+
+        if len(l) < 167:
+            print("WARNING: Skipped line %d: too short (%d, expected at least 167 chars)" % (cnt, len(l)))
+
+        try:
+            el = parse_line(l)
+            elements.append(el)
+        except ValueError as e:
+            print("Failed to parse line %d: [%s], exception: %s" % (cnt, l, e))
+
+        cnt = cnt + 1
+
+        if limit > 0:
+            limit -= 1
+            if limit == 0:
+                print("Limit reached. Parsing finished.")
+                return elements
+
+    return elements
+
 if __name__ == "__main__":
-    x = parse_nea(limit=0)
+    x = parse_txt("mpcorb_extended.dat", limit=100, skip="------------------")
 
     print("Returns %d orbit(s)" % len(x))
-    print(x[0])
