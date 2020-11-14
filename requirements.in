@@ -11,3 +11,7 @@ pytest
 
 # Poliastro rocks!
 #-e git+https://github.com/poliastro/poliastro#egg=poliastro
+
+
+# Security problem
+cryptography>=3.2
