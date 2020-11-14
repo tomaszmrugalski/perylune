@@ -2,22 +2,23 @@
 
 [![Build Status](https://travis-ci.com/tomaszmrugalski/perylune.svg?branch=master)](https://travis-ci.com/tomaszmrugalski/perylune)
 
-Perylune - a [periapsis](https://en.wikipedia.org/wiki/Apsis) (a lowest point in orbit) around Luna (better
-known as the Moon). Also a library of tools intended to aid various
-calculations related to Keplerian orbits and orbital mechanics in
-general. The software is in very early stages of development and can't
-do much at this stage. The long term goal is to be useful for the
-following areas:
+Perylune - a [periapsis](https://en.wikipedia.org/wiki/Apsis) (a lowest point in orbit) around Luna (better known as the Moon). Also a library of tools intended to aid various calculations related to Keplerian orbits and orbital mechanics in general. The software uses great [poliastro](https://github.com/poliastro/poliastro) for most of its calculations. Currently available functionality:
 
-- load, process and use various almanach formats: Yuma, SEM, MPCORB
+- load, process and use Yuma, MPCORB (Minor Planets Center) almanacs.
+- import ephemerides from NASA HORIZONS database
+- import TLE data from CELESTRAK database
+- calculate orbital burns, including Hohmann, prograde burns, pure inclination change
+- DOP parameters calculation for GPS precision
+- transfer windows (generate charts of body distances, such as Earth-Mars, Earth-Venus and others, porkchop plots)
+- detailed Orbit prints (with more details than the standard Poliastro code)
+- some basic time calculations
+
+The long term goal is to be useful for the following areas:
+
+- load, process and use various formats: SEM, 3LE
 - convert coordinates between ECEF, LLA, ENU and other systems
-- calculate satelite/object visibility (including rising and setting
-  times)
-- calculate ground track (single pass, design coverage for certain
-  area, revisit times, etc.)
-- orbital transfers (aiding mission designs, calculating delta-v
-  budget, window planning)
-
+- calculate satelite/object visibility (including rising and setting times)
+- calculate ground track (single pass, design coverage for certain area, revisit times, etc.)
 
 ## Installation
 
