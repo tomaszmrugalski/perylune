@@ -20,6 +20,10 @@ The long term goal is to be useful for the following areas:
 - calculate satelite/object visibility (including rising and setting times)
 - calculate ground track (single pass, design coverage for certain area, revisit times, etc.)
 
+## Code maturity
+
+Meh. This is my master thesis playground. Everything is unstable. Nothing works out of the box. I think the long term goal will be to mature more useful parts of the code and attempt to contribute it back to poliastro.
+
 ## Installation
 
 ```
