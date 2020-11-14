@@ -144,6 +144,18 @@ def parse_txt(fname, limit, skip):
 
     return elements
 
+def find_objects(elements, expr):
+    """Selects subset of elements, depending on specified criteria (lambda expr).
+    elements - list of elements returned by parse_txt
+    expr - an expression, e.g.
+    """
+    results = []
+    for e in elements:
+        if expr(e):
+            results.append(e)
+    print("%d out of %d elements matched critera." % (len(results), len(elements)))
+    return results
+
 if __name__ == "__main__":
     x = parse_txt("mpcorb_extended.dat", limit=100, skip="------------------")
 
