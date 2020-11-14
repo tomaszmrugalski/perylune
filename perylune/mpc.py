@@ -133,6 +133,8 @@ def parse_txt(fname, limit, skip):
             print("Failed to parse line %d: [%s], exception: %s" % (cnt, l, e))
 
         cnt = cnt + 1
+        if (not cnt % 50000):
+            print("Loaded %d entries so far." % cnt)
 
         if limit > 0:
             limit -= 1
