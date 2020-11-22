@@ -155,8 +155,3 @@ def find_objects(elements, expr):
             results.append(e)
     print("%d out of %d elements matched critera." % (len(results), len(elements)))
     return results
-
-if __name__ == "__main__":
-    x = parse_txt("mpcorb_extended.dat", limit=100, skip="------------------")
-
-    print("Returns %d orbit(s)" % len(x))
