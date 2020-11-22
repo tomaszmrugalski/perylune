@@ -70,3 +70,12 @@ POLIASTRO CONTRIB IDEAS:
 
 - POLIASTRO BUG: importing orbit from Horizons ephemerides for Earth around Sun shows odd inclination
   (note to self: setting up right plane fixes that) The default should be updated.
+
+- atmospheric perturbers doc
+  C_D = 2.2  # dimentionless => dimensionless
+
+- https://docs.poliastro.space/en/latest/examples/Atmospheric%20models.html
+  Last series of charts, the first chart has incorrect x axis description.
+
+  axs[0].set_xlabel("T [K]")
+  axs[0].set_xlabel("Altitude [K]")  <- remove this one
