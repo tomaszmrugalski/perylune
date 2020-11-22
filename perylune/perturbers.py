@@ -14,12 +14,13 @@
 # but it's very simplified. This more like a theoretical model that can be used to prove that
 # the perturber really works.
 #
+# Takes one parameter: accel, expressed in km/s. Accelerates in prograde direction for positive values and
+# in the retrograde (breaks) for negative values. Example nice values: 2e-5 - spiral, 2e-4 - fast escape trajectory
+#
 # Based on poliastro example.
 def constant_accel(accel):
 
-    # TODO: This is messed up. The parameter passed here (accel) is not used anywhere. Instead, the
-    # _const_accel is used instead.
-    _const_accel = accel # 3e-5 # expressed in km/s
+    _const_accel = accel # expressed in km/s
 
     def constant_acc(t0, u, k):
         """ This function is called every time the propagation algorithm needs to determine the perturbation.
