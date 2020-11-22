@@ -2,28 +2,18 @@
 
 https://www.reddit.com/r/Kos/comments/5h509a/hoe_do_you_calculate_intersecting_points_of_two/
 
-
-
 https://space.stackexchange.com/questions/13632/transfer-between-elliptical-orbits
 Nice discussion about transfer between elliptical orbits
 
 Angry astronaut - Earth-Moon system delta-v map
 https://youtu.be/Lb3t1rvQ-60?t=712
 
-# Backend Ideas
-
-
-
-
-
 # UI Ideas
 
 - a knob that turns Earth rotation on and off
 
-
 - orbit editor (orbit + add realistic maneuvers)
   - scenario: suborbital Perun launch. Task: make it to the orbit
-
 
 # Stuff to figure out
 
@@ -49,11 +39,6 @@ stropy.coordinates.spherical_to_cartesian(astropy.constants.R_earth, 54.352469/1
 Those values are a bit off (located at Gdansk Bay rather then where it's supposed)
 
 -----
-
-
-
-
----
 
 # Poliastro + jupyter installation
 
@@ -81,9 +66,7 @@ POLIASTRO CONTRIB IDEAS:
   the _layout is not documented anywhere.
   there is no description whatsoever how to alter the legend.
 
+- Implement Jacchia-77 atmosferic model (90-2500km), the standard COESA 1962 and 1976 models cover 0-700 and 0-1000km.
 
-POLIASTRO BUG:
-
-- importing orbit from Horizons ephemerides for Earth around Sun shows odd inclination
-  (note to self: setting up right plane fixes that)
-
+- POLIASTRO BUG: importing orbit from Horizons ephemerides for Earth around Sun shows odd inclination
+  (note to self: setting up right plane fixes that) The default should be updated.
