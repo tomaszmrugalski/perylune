@@ -9,10 +9,11 @@ from orbit_predictor.sources import NoradTLESource
 from orbit_predictor.predictors.base import Predictor
 from perylune.conf import Config, getConfig, APP_NAME, VERSION
 
-from perylune.  utils import url_to_filename
+from perylune.utils import url_to_filename
 
 CELESTRAK = [
-    r"https://celestrak.com/NORAD/elements/active.txt"
+    r"https://celestrak.com/NORAD/elements/active.txt",
+    "file://historic.txt"
 ]
 
 class OrbitDatabase:
@@ -30,6 +31,15 @@ class OrbitDatabase:
         self.datadir = cfg.datadir + os.path.sep + 'tle'
 
     def _get_tle_from_url(self, url):
+        if (url[:7] == "file://"):
+            fname = self.datadir + os.path.sep + url[7:]
+            print("Reading file [%s]" % fname)
+            with open(fname, "r") as f:
+                content = f.read()
+                f.close()
+                print("Loaded %d bytes from file %s" % (len(content), fname))
+                return content
+
         headers = { 'user-agent': APP_NAME + " " + VERSION, 'Accept': 'text/plain' }
         try:
             response = requests.get(url, headers=headers)
