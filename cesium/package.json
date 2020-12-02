@@ -1,6 +1,6 @@
 {
   "name": "perylune",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Participants:",
   "main": "index.js",
   "directories": {
@@ -15,7 +15,7 @@
     "url": "https://github.com/tomaszmrugalski/perylune"
   },
   "author": "Tomek Mrugalski",
-  "license": "BSD-3-Clause",
+  "license": "MIT",
   "devDependencies": {
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^6.1.1",
