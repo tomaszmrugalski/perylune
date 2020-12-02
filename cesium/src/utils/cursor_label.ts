@@ -1,21 +1,26 @@
+// This utility shows a label under the cursor. Useful for checking coordinates of places of interest.
+//
+// Usage: showCursorLabel(viewer);
 
+import * as Cesium from "cesium";
 
 export function showCursorLabel(viewer: Cesium.Viewer): void {
 
     // STEP 1: DISPLAY COORDS UNDER CURSOR
     // And now display the map coords under the cursor. This is strictly not needed, but it's very
     // useful for debugging.
-    const coordsLabel = viewer.entities.add({
-        label : {
-            show : false,
-            showBackground : true,
-            font : '14px monospace',
-            horizontalOrigin : Cesium.HorizontalOrigin.LEFT,
-            verticalOrigin : Cesium.VerticalOrigin.TOP,
-            pixelOffset : new Cesium.Cartesian2(15, 0)
-        }
-    });
+    var labels = new Cesium.LabelCollection();
 
+    viewer.scene.primitives.add(labels);
+
+    var coordsLabel = labels.add({
+        show : false,
+        showBackground : true,
+        font : '14px monospace',
+        horizontalOrigin : Cesium.HorizontalOrigin.LEFT,
+        verticalOrigin : Cesium.VerticalOrigin.TOP,
+        pixelOffset : new Cesium.Cartesian2(15, 0)
+    });
 
     // Mouse over the globe to see the cartographic position
     const handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
@@ -32,13 +37,11 @@ export function showCursorLabel(viewer: Cesium.Viewer): void {
             cartesian.z += 1000;
 
             coordsLabel.position = cartesian;
-            coordsLabel.label.show = true;
-            // coords_label.eyeOffset = new Cesium.Cartesian3(0, 0, -1000000);
-            coordsLabel.label.text =
-                'Lon: ' + ('   ' + longitudeString).slice(-10) + '\u00B0' +
-                '\nLat: ' + ('   ' + latitudeString).slice(-10) + '\u00B0';
+            coordsLabel.show = true;
+            coordsLabel.text = 'Lon: ' + ('   ' + longitudeString).slice(-10) + '\u00B0' +
+                             '\nLat: ' + ('   ' + latitudeString).slice(-10) + '\u00B0';
         } else {
-            coordsLabel.label.show = false;
+            coordsLabel.show = false;
         }
     }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
 }

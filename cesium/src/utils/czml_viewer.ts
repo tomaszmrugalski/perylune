@@ -1,13 +1,13 @@
 
-// These are recommended parameters for initializng the default view. Make sure they're set before
-// the viewer object is created.
+// This code initializes existing buttons with loadCzml function. Once clicked, the buttons will load specified CZML files.
 //
-// var rectangle = Cesium.Rectangle.fromDegrees(14,51,21,54);
-// Cesium.Camera.DEFAULT_VIEW_RECTANGLE = rectangle;
-// Cesium.Camera.DEFAULT_VIEW_FACTOR = 10;
+// Usage:
+// 1. Add a button with button-czml-load class and data-file property point to the CZML file name you want to load, e.g.
+//     <button class="cesium-button button-czml-load" data-file="czml/polish.czml">Polskie satelity</button>
+// 2. Call czmlViewer(viewer); from your .ts file.
+// 3. Now when user clicks the button, the specified CZML file will be loaded.
 
-import { viewerPerformanceWatchdogMixin } from "../../../typings/cesium";
-
+import * as Cesium from "cesium";
 
 export function czmlViewer(viewer: Cesium.Viewer) {
 
@@ -33,4 +33,3 @@ function loadCzml(viewer: Cesium.Viewer, czml: string) {
     viewer.dataSources.add(czmlDataSource);
     czmlDataSource.load(czml);
 }
-
