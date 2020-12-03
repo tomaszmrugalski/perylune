@@ -1,6 +1,7 @@
 
 import { showCursorLabel } from "./utils/cursor_label";
 import { czmlViewer } from "./utils/czml_viewer";
+import { referenceFrameSelector } from "./utils/reference_frame";
 
 import * as Cesium from "cesium";
 
@@ -11,7 +12,7 @@ Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOi
 // STEP 0: CREATE CESIUM WIDGET
 var rectangle = Cesium.Rectangle.fromDegrees(14,51,21,54);
 Cesium.Camera.DEFAULT_VIEW_RECTANGLE = rectangle;
-Cesium.Camera.DEFAULT_VIEW_FACTOR = 10;
+Cesium.Camera.DEFAULT_VIEW_FACTOR = 3;
 
 // This creates the top-level widget for Cesium.
 export const viewer = new Cesium.Viewer('cesiumContainer', {
@@ -25,4 +26,4 @@ showCursorLabel(viewer);
 
 czmlViewer(viewer);
 
-
+referenceFrameSelector(viewer);
