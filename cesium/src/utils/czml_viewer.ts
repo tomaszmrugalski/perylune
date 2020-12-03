@@ -11,7 +11,7 @@ import * as Cesium from "cesium";
 
 export function czmlViewer(viewer: Cesium.Viewer) {
 
-    // This updates costellation buttons
+    // This updates constellation buttons
     const czmlButtons = [...document.querySelectorAll(".button-czml-load")] as HTMLButtonElement[];
     czmlButtons.forEach(btn => {
         const f = btn.dataset["file"] as string;
