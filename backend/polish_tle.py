@@ -20,7 +20,7 @@ def czml_add_sat(extr, sat):
 
     print("Propagating sat %s" % name)
 
-    extr.add_orbit(orb, rtol=1e-4, label_text=name, id_name=name, id_description=descr, groundtrack_show=True, label_fill_color=[125, 80, 120, 255])
+    extr.add_orbit(orb, rtol=1e-4, label_text=name, id_name=name, id_description=descr, groundtrack_show=False) # , label_fill_color=[125, 80, 120, 255])
 
 def czml_write(fname, sats, start_epoch, end_epoch, sample_points):
 
@@ -44,13 +44,16 @@ def get_sat_descr(sat):
     RE = orb.attractor.R
 
     print("")
-    descr = "<b>%s</b><br/>" % name
-    descr = descr + "NORAD ID = <b>%d</b><br/>\n" % norad_id
+    descr =         "NORAD ID = <b>%d</b><br/><br/>\n" % norad_id
     descr = descr + "Parametry orbity<br/>\n{r_p:.1f} x {r_a:.1f} ({per_abs:.1f} x {apo_abs:.1f}) <br/>\n".format(r_p = orb.r_p, r_a=orb.r_a, per_abs=orb.r_p - RE, apo_abs=orb.r_a - RE)
-    descr = descr + "Inklinacja <i>i</i> = <b>%s</b>" % orb.inc
-    descr = descr + "<br/><b>Dane TLE:</b><br/>\n<pre>[%s]</pre><pre>%s</pre><br/>\n" % (tle.line1.strip(), tle.line2.strip())
-
-    # TODO: Add remaining tons of parameters.
+    descr = descr + "Półoś wielka <i>a</i> = <b>%4.2f %s</b><br/>" % (orb.a.value, orb.a.unit)
+    descr = descr + "Ekscentryczność <i>e</i> = <b>%s</b><br/>" % orb.ecc
+    descr = descr + "Inklinacja <i>i</i> = <b>%4.2f %s</b><br/>" % (orb.inc.value, orb.inc.unit)
+    descr = descr + "Rektascensja węzła wstępującego <i>raan</i> = <b>%4.2f %s</b><br/>" % (orb.raan.value, orb.raan.unit)
+    descr = descr + "Argument periapsis <i>argp</i> = <b>%4.2f %s</b><br/>" % (orb.argp.value, orb.argp.unit)
+    descr = descr + "Anomalia prawdziwa <i>nu</i> = <b>%4.2f %s</b><br/>" % (orb.nu.value, orb.nu.unit)
+    descr = descr + "Epoka = %s<br/><br/>" % str(orb.epoch)[:16]
+    descr = descr + "<br/><b>Dane TLE:</b><br/>\n<pre>%s\n%s</pre><br/>\n" % (tle.line1.strip(), tle.line2.strip())
 
     return descr
 
