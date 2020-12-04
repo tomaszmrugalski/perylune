@@ -22,6 +22,8 @@ export const viewer = new Cesium.Viewer('cesiumContainer', {
     shouldAnimate : true
 });
 
+viewer.scene.globe.enableLighting = true;
+
 showCursorLabel(viewer);
 
 czmlViewer(viewer);
