@@ -141,15 +141,36 @@ function updateButtonCallbacks(viewer: Cesium.Viewer) {
 function focusCameraTo(viewer: Cesium.Viewer, sat_id: string) {
     console.log("focusCameraTo(.., " + sat_id + ") clicked");
     var x = getSat(sat_id);
+    if (x === undefined) {
+        return;
+    }
     if (viewer.trackedEntity == x) {
-        viewer.trackedEntity = undefined; //
+        viewer.trackedEntity = undefined;
         viewer.selectedEntity = undefined;
     } else {
-        viewer.trackedEntity = x;   //
+        viewer.trackedEntity = x;
         viewer.selectedEntity = x;
     }
+
+    if (x && x.properties) {
+        console.log("getting TLE for object " + x.name);
+        var tle1 = x.properties["tle1"];
+        var tle2 = x.properties["tle2"];
+
+        showTLEInfo(tle1, tle2);
+    } else {
+        showTLEInfo("", "");
+    }
+
 }
 
+// Shows specified TLE information in the TLE INFO window in the lower right corner.
+function showTLEInfo(line1 : string, line2: string): void {
+    var info = document.querySelector("#tle-info") as HTMLTableCellElement;
+    info.innerText = line1 + "\n" + line2;
+}
+
+// Toggles path visibility (turns the path on or off and flips the button text)
 function toggleSatPath(viewer: Cesium.Viewer, sat_id: string) {
     console.log("toggleSatPath(.., " + sat_id + ") clicked");
     var x = getSat(sat_id) as Cesium.Entity;
