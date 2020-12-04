@@ -105,9 +105,10 @@ function updateUI(viewer:Cesium.Viewer) {
         let cell3 = row.insertCell();
         let btn2 = document.createElement('button');
         btn2.classList.add('cesium-button', 'button-sat-path');
+        btn2.id = "button-sat-path-" + e.id;
         btn2.dataset['sat_id'] = e.id;
         btn2.dataset['sat_name'] = e.name;
-        btn2.innerText = "Widać";
+        btn2.innerText = "Widoczna";
         cell3.appendChild(btn2);
     }
 
@@ -142,11 +143,34 @@ function focusCameraTo(viewer: Cesium.Viewer, sat_id: string) {
     var x = getSat(sat_id);
     if (viewer.trackedEntity == x) {
         viewer.trackedEntity = undefined; //
+        viewer.selectedEntity = undefined;
     } else {
         viewer.trackedEntity = x;   //
+        viewer.selectedEntity = x;
     }
 }
 
 function toggleSatPath(viewer: Cesium.Viewer, sat_id: string) {
     console.log("toggleSatPath(.., " + sat_id + ") clicked");
+    var x = getSat(sat_id) as Cesium.Entity;
+    if (x === undefined || x.path === undefined) {
+        console.log("ERROR: Unable to find sat with sat_id=" + sat_id);
+        return;
+    }
+    if (x.path.show) {
+        x.path.show = undefined;
+        var d = document.querySelector("#button-sat-path-" + sat_id) as HTMLButtonElement;
+        if (d) {
+            d.innerText = "Widoczna";
+        }
+        console.log("Hiding path [" + d + "]");
+    } else {
+        console.log("Showing path");
+        x.path.show = new Cesium.ConstantProperty(false);
+        var d = document.querySelector("#button-sat-path-" + sat_id) as HTMLButtonElement;
+        if (d) {
+            d.innerText = "Ukryta";
+        }
+
+    }
 }
