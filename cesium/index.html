@@ -44,8 +44,28 @@
         <button class="cesium-button button-clear-all">Usuń</button>
         <button class="cesium-button button-frame-selector" data-names="Inercjalny (ECI),Stały (ECEF)">Układ odniesienia:Stały (ECEF)</button>
     </div>
+    <div style="position:absolute; left: 5px; top: 40px; z-index:1">
+        <table id="satList" class="sat-list" style="text-align: center;">
+            <thead>
+                <tr>
+                    <td>Satelita</td>
+                    <td>Aktywny</td>
+                    <td>Trajektoria</td>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <div style="position:absolute; bottom: 48px; right: 8px; z-index:1" id="tle-info">
+        <table>
+            <thead><tr><td>TLE INFO HERE:</td></tr></thead>
+            <tbody><tr><td>-</td></tr></tbody>
+        </table>
+    </div>
+
     <div id="cesiumContainer">
     </div>
+
 </body>
 
 </html>
