@@ -1,4 +1,4 @@
-# Bibliography
+# Interesting links
 
 https://www.reddit.com/r/Kos/comments/5h509a/hoe_do_you_calculate_intersecting_points_of_two/
 
@@ -9,8 +9,6 @@ Angry astronaut - Earth-Moon system delta-v map
 https://youtu.be/Lb3t1rvQ-60?t=712
 
 # UI Ideas
-
-- a knob that turns Earth rotation on and off
 
 - orbit editor (orbit + add realistic maneuvers)
   - scenario: suborbital Perun launch. Task: make it to the orbit
@@ -54,7 +52,7 @@ pip install tle-tools
 
 jupyterlab
 
-POLIASTRO CONTRIB IDEAS:
+# POLIASTRO CONTRIB IDEAS
 
 - doc update explaining how to tweak the charts
   (see 02-rocketlab-to-noaa17.ipynb)
@@ -66,7 +64,18 @@ POLIASTRO CONTRIB IDEAS:
   the _layout is not documented anywhere.
   there is no description whatsoever how to alter the legend.
 
-- Implement Jacchia-77 atmosferic model (90-2500km), the standard COESA 1962 and 1976 models cover 0-700 and 0-1000km.
+- Implement Jacchia-77 atmospheric model (90-2500km), the standard COESA 1962 and 1976 models cover 0-700 and 0-1000km.
+
+- Pass custom properties to CZML exporter. Example usage: pass TLE data, so it can be visualized easily.
+  1. poliastro/czml/extract_czml.pl:
+  Two new parameters to add_orbit:
+          properties=None,
+          groundtrack_properties=None,
+  2. Pass properties=properties when creating packet
+  3. Pass properties=groundtrack_properties when creating groundtrack packet
+- Add lead_time and trail_time to czml.add_orbit (see )
+
+# Other Notes
 
 - POLIASTRO BUG: importing orbit from Horizons ephemerides for Earth around Sun shows odd inclination
   (note to self: setting up right plane fixes that) The default should be updated.
