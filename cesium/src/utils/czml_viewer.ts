@@ -100,7 +100,13 @@ function updateUI(viewer:Cesium.Viewer) {
         cell.appendChild(btn);
 
         let cell2 = row.insertCell();
-        cell2.innerText = "TAK";
+        if (e.name == "PWSat" || e.name == "Brite-PL (Lem)") {
+            cell2.classList.add("red");
+            cell2.innerText = "NIE";
+        } else {
+            cell2.classList.add("green");
+            cell2.innerText = "TAK";
+        }
 
         let cell3 = row.insertCell();
         let btn2 = document.createElement('button');
