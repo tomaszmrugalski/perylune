@@ -153,21 +153,18 @@ function focusCameraTo(viewer: Cesium.Viewer, sat_id: string) {
     if (viewer.trackedEntity == x) {
         viewer.trackedEntity = undefined;
         viewer.selectedEntity = undefined;
+        showTLEInfo("", "");
     } else {
         viewer.trackedEntity = x;
         viewer.selectedEntity = x;
+        if (x && x.properties) {
+            console.log("getting TLE for object " + x.name);
+            var tle1 = x.properties["tle1"];
+            var tle2 = x.properties["tle2"];
+
+            showTLEInfo(tle1, tle2);
+        }
     }
-
-    if (x && x.properties) {
-        console.log("getting TLE for object " + x.name);
-        var tle1 = x.properties["tle1"];
-        var tle2 = x.properties["tle2"];
-
-        showTLEInfo(tle1, tle2);
-    } else {
-        showTLEInfo("", "");
-    }
-
 }
 
 // Shows specified TLE information in the TLE INFO window in the lower right corner.
@@ -178,10 +175,8 @@ function showTLEInfo(line1 : string, line2: string): void {
 
 // Toggles path visibility (turns the path on or off and flips the button text)
 function toggleSatPath(viewer: Cesium.Viewer, sat_id: string) {
-    console.log("toggleSatPath(.., " + sat_id + ") clicked");
     var x = getSat(sat_id) as Cesium.Entity;
     if (x === undefined || x.path === undefined) {
-        console.log("ERROR: Unable to find sat with sat_id=" + sat_id);
         return;
     }
     if (x.path.show) {
@@ -190,9 +185,7 @@ function toggleSatPath(viewer: Cesium.Viewer, sat_id: string) {
         if (d) {
             d.innerText = "Widoczna";
         }
-        console.log("Hiding path [" + d + "]");
     } else {
-        console.log("Showing path");
         x.path.show = new Cesium.ConstantProperty(false);
         var d = document.querySelector("#button-sat-path-" + sat_id) as HTMLButtonElement;
         if (d) {
