@@ -44,7 +44,7 @@ def print_orb(o: Orbit):
     else:
         print("a(𝑎)=%4.4f%s, b=%4.4f%s, e=%4.2f%s, i=%4.2f%s raan(Ω)=%4.2f%s argp(𝜔)=%4.2f%s nu(𝜈)=%4.2f%s" % \
             (a.value, a.unit, b.value, b.unit, e.value, e.unit, i.value, i.unit, raan.value, raan.unit, argp.value, argp.unit, nu.value, nu.unit))
-        print("period=%4.2f%s perapis=%4.4f%s(%4.2f%s) apoapsis=%4.4f%s(%4.2f%s)" % \
+        print("period=%4.2f%s periapsis=%4.4f%s(%4.2f%s) apoapsis=%4.4f%s(%4.2f%s)" % \
             (o.period.value, o.period.unit, \
             per.value, per.unit, per_surface.value, per_surface.unit, \
             apo.value, apo.unit, apo_surface.value, apo_surface.unit))
