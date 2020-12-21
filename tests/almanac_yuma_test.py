@@ -1,4 +1,6 @@
 from perylune.almanac_yuma import *
+from perylune.orbit_tools import *
+from test_tools import *
 
 import pytest
 
@@ -60,3 +62,21 @@ def test_yumaAppend():
     # And now load with append set to false. New load should wipe the previous ones
     alm.load("data/yuma/misje-lab1.txt", False)
     assert 1 == len(alm.sats)
+
+
+def test_yuma2orbit():
+
+    alm = AlmanacYuma()
+    alm.sats.clear()
+    # Let's load the first once. There should be 31 sats in it.
+    alm.load("data/yuma/almanac.yuma-2019-11-29.txt", True)
+
+    # Convert the first sat to poliastro
+    o = alm.sats[0].to_orbit()
+    print_orb(o)
+
+    close_enough(26559.543*u.km, o.a, 10*u.m)
+    close_enough(0.01 * u.one, o.ecc, 0.01*u.one)
+    close_enough(56.06 * u.deg, o.inc, 0.1 * u.deg)
+    # TODO: Check remaining elements
+    # TODO: Check epoch

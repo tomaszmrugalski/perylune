@@ -6,6 +6,7 @@ from poliastro.twobody import Orbit
 from poliastro.bodies import Earth, Sun
 import numpy as np
 
+from test_tools import *
 
 def test_escape_velocity():
 
@@ -34,8 +35,6 @@ def test_escape_velocity():
     v,vp,va = interplanetary.escape_vel(o3, False)
     print(v, vp, va)
 
-def close_enough(a, b, epsilon):
-    assert np.abs(a - b) <= epsilon
 
 def test_transfer_vel():
     """Tests if interplanetary Hohmann transfers are calculated properly."""
