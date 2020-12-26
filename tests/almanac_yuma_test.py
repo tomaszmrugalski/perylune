@@ -1,6 +1,6 @@
 from perylune.almanac_yuma import *
-from perylune.orbit_tools import *
 from test_tools import *
+from astropy import units as u
 
 import pytest
 
@@ -73,7 +73,6 @@ def test_yuma2orbit():
 
     # Convert the first sat to poliastro
     o = alm.sats[0].to_orbit()
-    print_orb(o)
 
     close_enough(26559.543*u.km, o.a, 10*u.m)
     close_enough(0.01 * u.one, o.ecc, 0.01*u.one)
