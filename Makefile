@@ -44,3 +44,9 @@ perylune-venv-uninstall:
 
 check:
 	PYTHONPATH=.:poliastro/src pytest -v --ignore=poliastro
+
+upload_cesium:
+	cd cesium
+	npm run build
+	scp -r dist perylune:public_html/cesium
+	scp -r czml/polish.czml perylune:public_html/cesium/czml/polish.czml
