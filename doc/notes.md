@@ -88,3 +88,5 @@ jupyterlab
 
   axs[0].set_xlabel("T [K]")
   axs[0].set_xlabel("Altitude [K]")  <- remove this one
+
+- missing hypothesis in requirements.{in|txt}
