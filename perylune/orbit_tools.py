@@ -4,6 +4,7 @@ from poliastro.util import norm
 from astropy import units as u
 import numpy as np
 from math import sqrt, sin, cos, pi
+from tletools import TLE
 
 def load_tle(tle_text: str):
     tle_lines = tle_text.strip().splitlines()
@@ -37,7 +38,9 @@ def print_orb(o: Orbit):
         apo = apo.to(u.au)
         per = per.to(u.au)
         period = o.period.to(u.day)
-        print("a(𝑎)=%4.4f%s, b=%4.4f%s, e=%4.2f%s, i=%4.2f%s raan(Ω)=%4.2f%s argp(𝜔)=%4.2f%s nu(𝜈)=%4.2f%s" % \
+        if period.value > 1000:
+            period = period.to(u.year)
+        print("a(𝑎)=%4.4f%s, b=%4.4f%s, e=%4.4f%s, i=%4.4f%s raan(Ω)=%4.2f%s argp(𝜔)=%4.2f%s nu(𝜈)=%4.2f%s" % \
             (a.value, a.unit, b.value, b.unit, e.value, e.unit, i.value, i.unit, raan.value, raan.unit, argp.value, argp.unit, nu.value, nu.unit))
         print("period=%4.2f%s perapis=%4.4f%s apoapsis=%4.4f%s" % \
             (period.value, period.unit, per.value, per.unit, apo.value, apo.unit))
