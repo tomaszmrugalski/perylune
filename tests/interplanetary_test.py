@@ -50,8 +50,8 @@ def test_transfer_vel():
         print(len(v))
         print(len(case))
 
-        close_enough(v[0].to(u.km/u.s).value, case[2], 0.1)
-        close_enough(v[1].to(u.km/u.s).value, case[3], 0.1)
-        close_enough(v[2].to(u.km/u.s).value, case[4], 0.1)
-        close_enough(v[3].to(u.km/u.s).value, case[5], 0.1)
-        close_enough(v[4].value, case[6], 1) # check the orbital period
+        close_enough(v[0].to(u.km/u.s).value, case[2], 0.3)
+        close_enough(v[1].to(u.km/u.s).value, case[3], 0.3)
+        close_enough(v[2].to(u.km/u.s).value, case[4], 0.5)
+        close_enough(v[3].to(u.km/u.s).value, case[5], 0.5)
+        close_enough(v[4].value, case[6], 2) # check the orbital period
