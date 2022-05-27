@@ -140,8 +140,9 @@ def transfer_vel(body1, body2, attractor):
        v2 - heliocentric velocity at arrival (before Hohmann burn)
        tof - time of flight (in days) """
 
-    # How to obtain the
-    method = "horizons_orbit" # allowed values are ephem, horizons_orbit
+    # How to obtain the orbit. The from_horisons method seems to be no longer supported
+    # as of perylune 0.16.3.
+    method = "ephem" # allowed values are ephem, horizons_orbit
 
     if attractor is None:
         attractor = Sun
