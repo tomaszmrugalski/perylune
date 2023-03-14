@@ -13,7 +13,7 @@ from perylune.utils import url_to_filename
 
 CELESTRAK = [
     r"https://celestrak.com/NORAD/elements/active.txt"
-    // "file://historic.txt"
+#    "file://historic.txt"
 ]
 
 class OrbitDatabase:
