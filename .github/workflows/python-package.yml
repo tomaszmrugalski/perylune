@@ -32,6 +32,7 @@ jobs:
     - name: Setup Perylune
       run: |
         cp .github-perylune.ini perylune.ini
+        mkdir -p /home/runner/work/perylune/data/tle
     - name: Test with pytest
       run: |
         python -m pytest -s -v
