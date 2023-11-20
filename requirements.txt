@@ -149,7 +149,7 @@ tomli==2.0.1
     # via pytest
 tzdata==2023.3
     # via pandas
-urllib3==2.0.4
+urllib3==2.0.7
     # via requests
 w3lib==2.1.2
     # via czml3
