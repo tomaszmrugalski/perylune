@@ -1,6 +1,14 @@
 # Perylune
 
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
 [![Build Status](https://travis-ci.com/tomaszmrugalski/perylune.svg?branch=master)](https://travis-ci.com/tomaszmrugalski/perylune)
+
+## Project status
+
+Since the major library Perylune depended on - polistro - has reached its End-Of-Line, there is no viable way forward to carry on with Perylune development. As such, I'm concluding this project.
+No future updates are anticipated. The bug tracker remains open.
+
+## Overview
 
 Perylune - a [periapsis](https://en.wikipedia.org/wiki/Apsis) (a lowest point in orbit) around Luna (better known as the Moon). Also a library of tools intended to aid various calculations related to Keplerian orbits and orbital mechanics in general. The software uses great [poliastro](https://github.com/poliastro/poliastro) for most of its calculations. Currently available functionality:
 
